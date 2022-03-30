@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">demo</string>
+    <string name="facebook_app_id">1385959295197717</string>
+<string name="fb_login_protocol_scheme">fb1385959295197717</string>
+<string name="facebook_client_token">62106a8eeaaf18a91af58a257d34b59b</string>
     <string moduleConfig="true" name="CodePushDeploymentKey">fLhAGT1OksP4aVENtwwsZ5QViDgQ1mQGWOcxP</string>
 </resources>

@@ -13,6 +13,7 @@ export const FILE_NAMES = {
   BOTTOM_TAB:'bottomtab',
   COMMENTLIST_SCREEN:'CommentList',
   LOGIN_SCREEN:'LoginScreen',
+  FIELD_GENERATE_SCREEN:'FieldScreen'
 
 
 };
