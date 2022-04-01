@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import BottomNavigation from 'react-native-material-bottom-navigation';
 import {connect} from 'react-redux';
 import * as actions from '../redux/actionCreatorsTs';
 import AppActivityIndicator from './AppActivityIndicator';

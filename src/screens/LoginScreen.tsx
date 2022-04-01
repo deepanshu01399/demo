@@ -343,18 +343,16 @@ const LoginScreen = (props: any) => {
             lable={"Button6"}
             value={label6}
             callBack={(data: any) => setLabelValue6(data)}
-            type={"Pressable"}
+            type={"PressableBtn"}
             isDisabled={true}
-            inputType={"Pressable"}
             iconAlignment={"alignEnd"}
             needtoShowIcon={true}
           />
           <FieldGeneratorScreen
             lable={"Button7"}
             callBack={(data: any) => setLabelValue7(data)}
-            type={"Pressable"}
+            type={"PressableBtn"}
             isDisabled={false}
-            inputType={"Pressable"}
             iconAlignment={"justRight"}
             backgroundColor={COLORS.white}
             textColor={COLORS.appDefaultColor}

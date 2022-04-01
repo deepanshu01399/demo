@@ -7,7 +7,7 @@ import ModalPicker from "react-native-modal-selector"
 import DatePicker from 'react-native-datepicker';
 import { Assets } from "../resources/Assets";
 
-interface PressableProps {
+interface PressableBtnProps {
     lable?: string;
     isActive?: boolean;
     callback?: any;
@@ -18,6 +18,19 @@ interface PressableProps {
     backgroundColor: string;
     textColor: string;
     needtoShowIcon: boolean;
+
+}
+interface PressableCheckProps {
+    lable?: string;
+    isActive: boolean;
+    callback?: any;
+    isCheckbox?: boolean;
+    isDisabled?: boolean;
+    type?: string;
+    iconAlignment?: string;
+    backgroundColor: string;
+    textColor: string;
+    needtoShowTextMsg:boolean;
 
 
 }
@@ -147,7 +160,7 @@ const EditTextComponent = (props: any) => {
         </View>
     )
 }
-const PressableComponent = (props: PressableProps) => {
+const PressableBtnComponent = (props: PressableBtnProps) => {
     return (
         <TouchableOpacity
             style={{ ...styles.PressableComponent, backgroundColor: props.isDisabled ? COLORS.appLightGray : props.backgroundColor, }}
@@ -199,6 +212,54 @@ const PressableComponent = (props: PressableProps) => {
     );
 };
 
+const PressableCheckComponent = (props: PressableCheckProps) => {
+    return (
+        <TouchableOpacity
+            onPress={() => {
+                props.callback(!props.isActive);
+            }}
+            disabled={props.isDisabled}
+        >
+            {props.iconAlignment == "justRight" ?
+                <View style={{flexDirection: 'row' }}>
+                {props.needtoShowTextMsg?
+                    <Text
+                        style={{
+                            color: props.isDisabled ? COLORS.black : props.textColor,
+                            fontFamily: 'Poppins-Regular',
+                            fontSize: 12,
+                        }}>
+                        {props.lable}
+                    </Text>
+:null}
+                    <Image
+                        source={props.isActive ? Assets.checked : Assets.unchecked}
+                        style={{  }} />
+                </View>
+                :
+                <View style={{flexDirection: 'row' }}>
+                    <Image
+                        source={props.isActive ? Assets.checked : Assets.unchecked}
+                        style={{}} />
+                {props.needtoShowTextMsg?
+
+                    <Text
+                        style={{
+                            color: props.isDisabled ? COLORS.black : props.textColor,
+                            fontFamily: 'Poppins-Regular',
+                            fontSize: 12,
+                        }}>
+                        {props.lable}
+                    </Text>
+:null}
+
+                </View>
+
+
+            }
+        </TouchableOpacity>
+    );
+};
 const PickerComponent = (props: PickerProps) => {
     return (<View style={{ ...styles.pickerWrapper, backgroundColor: props.isDisabled ? COLORS.appLightGray : COLORS.white, }}>
         {props?.lable !== undefined ? (
@@ -296,9 +357,9 @@ const FieldGeneratorScreen = (props: any) => {
                 />
             )
 
-        case "Pressable":
+        case "PressableBtn":
             return (
-                <PressableComponent
+                <PressableBtnComponent
                     lable={props?.lable}
                     isDisabled={props?.isDisabled}
                     callback={(data: string) => props?.callBack(data)}
@@ -307,6 +368,19 @@ const FieldGeneratorScreen = (props: any) => {
                     backgroundColor={props?.backgroundColor}
                     textColor={props?.textColor}
                     needtoShowIcon={props?.needtoShowIcon}
+                />)
+        case "PressableCheck":
+            return (
+                <PressableCheckComponent
+                    lable={props?.lable}
+                    isDisabled={props?.isDisabled}
+                    callback={(data: string) => props?.callBack(data)}
+                    iconAlignment={props?.iconAlignment}
+                    backgroundColor={props?.backgroundColor}
+                    textColor={props?.textColor}
+                    isCheckbox={props?.isCheckbox}
+                    isActive={props?.isActive}
+                    needtoShowTextMsg={props?.needtoShowTextMsg}
                 />)
         case "picker":
             return (
