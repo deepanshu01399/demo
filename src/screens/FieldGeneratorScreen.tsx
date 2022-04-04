@@ -73,7 +73,6 @@ const EditTextComponent = (props: any) => {
     }, [props?.value]);
 
     const getKeyboardType = (inputType: string, props: any) => {
-        console.log(inputType, props)
         switch (inputType) {
             case 'NUMBER': // this also returns dot in android
                 return 'number-pad';
@@ -101,7 +100,6 @@ const EditTextComponent = (props: any) => {
             case "DASH":
                 let dashvalues: string = CommonFunctions.getDashValues(data);
                 if (dashvalues !== undefined) {
-                    console.log("-------dashvalue----", dashvalues)
                     setInputValue(dashvalues);
                     props.callback(dashvalues);
                 }
@@ -188,7 +186,6 @@ const PressableBtnComponent = (props: PressableBtnProps) => {
 
                 </View>
                 :
-                props.iconAlignment == "alignEnd" ?
                     <View style={{ flex: 1, flexDirection: 'row' }}>
                         <View style={{ flex: 1, flexDirection: 'row', justifyContent: "center" }}>
                             <Text
@@ -205,8 +202,9 @@ const PressableBtnComponent = (props: PressableBtnProps) => {
                             <Image
                                 source={Assets.EditIcon}
                                 style={{ marginHorizontal: commonStyling._sideScreenSpacing, justifyContent: 'flex-end' }} />
-                            : null}
-                    </View> : null}
+                    : null}
+                    </View>
+}
 
         </TouchableOpacity>
     );
@@ -450,7 +448,6 @@ const styles = StyleSheet.create({
         borderWidth: 1.5,
         borderRadius: 5,
         borderColor: COLORS.dimAppBlue,
-        marginTop: 15,
         minHeight: commonStyling._fieldHeight,
         justifyContent: 'center',
         marginHorizontal: commonStyling._sideScreenSpacing,

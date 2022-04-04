@@ -46,7 +46,6 @@ const CardComponent=(props:CardComponent)=>{
         <View  style={{backgroundColor:props.backgroundColor,padding:10,borderRadius:5,
             borderColor:props.borderColor,borderWidth:2,}}>
             {props.children}
-            {console.log(props)}
         </View>
     )
 
