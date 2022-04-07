@@ -14,6 +14,7 @@ export const FILE_NAMES = {
   COMMENTLIST_SCREEN:'CommentList',
   LOGIN_SCREEN:'LoginScreen',
   FLAT_SCREEN:'FlatScreen',
+  FLAT_SCREEN2:'FlatScreen2',
   FIELD_GENERATE_SCREEN:'FieldScreen'
 
 
