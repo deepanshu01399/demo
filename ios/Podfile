@@ -22,6 +22,8 @@ target 'demo' do
 
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
 
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
   target 'demoTests' do
     inherit! :complete
     # Pods for testing

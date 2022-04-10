@@ -15,6 +15,7 @@ export const FILE_NAMES = {
   LOGIN_SCREEN:'LoginScreen',
   FLAT_SCREEN:'FlatScreen',
   FLAT_SCREEN2:'FlatScreen2',
+  PROFILE_SCREEN:'ProfileScreen',
   FIELD_GENERATE_SCREEN:'FieldScreen'
 
 
