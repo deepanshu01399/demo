@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -9,14 +9,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {connect} from 'react-redux';
-import {aboutPost} from '../models/postList';
+import { connect } from 'react-redux';
+import { aboutPost } from '../models/postList';
 import * as actions from '../redux/actionCreatorsTs';
 import MainView from './MainView';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import * as RootNavigation from '../navigation/RootNavigation';
-import {FILE_NAMES} from '../static/Constants';
-import {RESETCOMMENT} from '../redux/actionTypes';
+import { FILE_NAMES } from '../static/Constants';
+import { RESETCOMMENT } from '../redux/actionTypes';
 import crashlytics from '@react-native-firebase/crashlytics';
 
 
@@ -26,12 +26,12 @@ const PostList = (props: any) => {
   const isLoading = props.isLoading;
   let postList;
   let userPosts;
-  if(props.route.params?.callFor!=="UserPost")
-  postList = props.postList.data ?? [];
+  if (props.route.params?.callFor !== "UserPost")
+    postList = props.postList.data ?? [];
   else
-  userPosts=props.userPostList?.data??[];
+    userPosts = props.userPostList?.data ?? [];
 
-  let postLimit=10;
+  let postLimit = 10;
 
   function getPersonDetail(id: Number) {
     props._showProgressBar();
@@ -54,7 +54,7 @@ const PostList = (props: any) => {
           <View style={styles.profileHeader}>
             <Image
               style={styles.profileHeaderImage}
-              source={{uri: item.owner.picture}}
+              source={{ uri: item.owner.picture }}
             />
             <Text style={styles.profileHeadertext}>
               {item.owner.title}.{item.owner.firstName} {item.owner.lastName}
@@ -66,16 +66,14 @@ const PostList = (props: any) => {
           onPress={() => {
             showComments(item.id, item.image);
           }}>
-          <Image style={styles.postImage} source={{uri: item.image}} />
+          <Image style={styles.postImage} source={{ uri: item.image }} />
         </TouchableOpacity>
         <Text style={styles.postLikeText}>{item.likes} Likes </Text>
 
         <View style={styles.commentView}>
-          <TouchableOpacity  onPress={()=>{
-		crashlytics().crash();
-    
-    console.log("crashed.............")
-  }}>
+          <TouchableOpacity onPress={() => {
+            //	crashlytics().crash();
+          }}>
             <View style={styles.commentItem}>
               <Icon
                 name="thumbs-up"
@@ -98,9 +96,9 @@ const PostList = (props: any) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-           onPress={() => {
-            onShare(item.image);
-          }}
+            onPress={() => {
+              onShare(item.image);
+            }}
           >
 
             <View style={styles.commentItem}>
@@ -114,17 +112,17 @@ const PostList = (props: any) => {
     );
   };
 
-  const loadMorePost=()=>{
-    postLimit=postLimit+10;
+  const loadMorePost = () => {
+    postLimit = postLimit + 10;
     props._getPostList(postLimit);
-  }  
+  }
 
   return (
     <MainView>
       <FlatList
         keyExtractor={(item, index: any) => index}
-        renderItem={({item, index}) => renderItems(item, index)}
-        data={ props.route.params?.callFor!=="UserPost"?postList:userPosts}
+        renderItem={({ item, index }) => renderItems(item, index)}
+        data={props.route.params?.callFor !== "UserPost" ? postList : userPosts}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
           <Text style={styles.profileHeadertext}>Loading from ...</Text>
@@ -147,20 +145,20 @@ const mapStateToProps = (state: stateProps) => {
     isLoading: state.commonReducer.isLoading,
     error: state.commonReducer.error,
     postList: state.commonReducer.postList,
-    userPostList:state.commonReducer.userPostList,
+    userPostList: state.commonReducer.userPostList,
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    _getPostList: (data:Number) => dispatch(actions.getPostList(data)),
+    _getPostList: (data: Number) => dispatch(actions.getPostList(data)),
     _showProgressBar: () => dispatch(actions.showProgressBar()),
     _getPerSonDetail: (id: Number) => dispatch(actions.getPersonDetail(id)),
-    _resetComment: () => dispatch({type: RESETCOMMENT}),
+    _resetComment: () => dispatch({ type: RESETCOMMENT }),
   };
 };
 const onShare = async (url: string) => {
-  console.log("api mimage :",url)
+  console.log("api mimage :", url)
   try {
     const result = await Share.share({
       title: 'Post by Dummy Api',
@@ -176,7 +174,7 @@ const onShare = async (url: string) => {
     } else if (result.action === Share.dismissedAction) {
       // dismissed
     }
-  } catch (error:any) {
+  } catch (error: any) {
     crashlytics().recordError(error);
 
     Alert.alert('Error', 'Something went wrong...');

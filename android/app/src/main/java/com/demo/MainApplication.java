@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -15,6 +16,7 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import io.invertase.firebase.crashlytics.ReactNativeFirebaseCrashlyticsPackage;
 import java.util.List;
+
 
 public class MainApplication extends Application implements ReactApplication {
 

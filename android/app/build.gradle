@@ -222,6 +222,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
         implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.facebook.android:facebook-android-sdk:13.1.0'
+    implementation project(':react-native-charts-wrapper')
 
 
     implementation  project(':react-native-vector-icons')

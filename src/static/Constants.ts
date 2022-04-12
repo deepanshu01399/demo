@@ -16,6 +16,7 @@ export const FILE_NAMES = {
   FLAT_SCREEN:'FlatScreen',
   FLAT_SCREEN2:'FlatScreen2',
   PROFILE_SCREEN:'ProfileScreen',
+  LINECHART_SCREEN:'LineCharts',
   FIELD_GENERATE_SCREEN:'FieldScreen'
 
 
