@@ -10,16 +10,15 @@ const SplashScreen = (props: any) => {
   const postList = props.postList.data ?? [];
 
   useEffect(() => {
-    //props._showProgressBar();
     props._getPostList(10);
     setTimeout(() => {
-      props.navigation.replace(FILE_NAMES.BOTTOM_TAB);
+      props.navigation.replace(FILE_NAMES.APP_STACK);
     }, 1500);
   }, []);
 
   return (
     <MainView>
-      <View style={{backgroundColor: 'red', flex: 1}}>
+      <View style={{backgroundColor: '', flex: 1}}>
         <Text>splash screen</Text>
       </View>
     </MainView>

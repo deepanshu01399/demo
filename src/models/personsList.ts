@@ -1,15 +1,15 @@
 export interface personList{
-    total?:Number,
-    page?:Number,
-    limit?:Number,
+    total?:number,
+    page?:number,
+    limit?:number,
     Data?:DataInterface[],
 }
 
 export interface DataInterface{
-    id?:Number,
-    title?:String,
-    firstName?:String,
-    lastName?:String,
-    picture?:String
+    id?:number,
+    title?:string,
+    firstName?:string,
+    lastName?:string,
+    picture?:string
 
 }

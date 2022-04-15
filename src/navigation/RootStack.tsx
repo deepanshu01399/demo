@@ -1,16 +1,15 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {FILE_NAMES} from '../static/Constants';
-import AppStack from './AppStack';
 import SplashStack from './SplashStack';
 import {navigationRef} from './RootNavigation';
-import BottomNavigationStack from './BottomNavigatorStack';
+import { createStackNavigator } from '@react-navigation/stack';
+import AppStack from './AppStack';
 
 interface RootStackProps {}
 
 const RootStack = (props: RootStackProps) => {
-  const Stack = createNativeStackNavigator();
+  const Stack = createStackNavigator();
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
@@ -19,8 +18,8 @@ const RootStack = (props: RootStackProps) => {
         <Stack.Screen component={SplashStack} name={FILE_NAMES.SPLASH_STACK} />
 
         <Stack.Screen
-          component={BottomNavigationStack}
-          name={FILE_NAMES.BOTTOM_TAB}
+          component={AppStack}
+          name={FILE_NAMES.APP_STACK}
           options={{title: 'AppStackStg'}}
         />
         

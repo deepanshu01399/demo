@@ -3,14 +3,17 @@ export const HEADER_LANGUAGAE = 'headerLanguage';
 export const BASE_URL='https://dummyapi.io/data/v1/'
 
 export const FILE_NAMES = {
-  APP_STACK: 'Home',
-  SPLASH_STACK: 'SplashStack',
   ROOT_STACK: 'RootStack',
+  SPLASH_STACK: 'SplashStack',
+  APP_STACK: 'AppStack',
+  DRAWER_TAB:'Drawertab',
+  DASHBOARD_STACK: 'Home',
+  BOTTOM_TAB:'Bottomtab',
+  PEOPLE_STACK: 'People',
   SPLASH_SCREEN: 'SplashScreen',
-  DASHBOARD_SCREEN: 'Search',
   POSTLIST_SCREEN:'Posts',
-  PERSONDETAIL_SCREEN: 'Profile',
-  BOTTOM_TAB:'bottomtab',
+  PEOPLE_SCREEN: 'People',
+  PERSONDETAIL_SCREEN: 'Profile Details',
   COMMENTLIST_SCREEN:'CommentList',
   LOGIN_SCREEN:'LoginScreen',
   FLAT_SCREEN:'FlatScreen',

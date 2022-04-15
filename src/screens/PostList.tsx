@@ -41,6 +41,9 @@ const PostList = (props: any) => {
   const showComments = (id: Number, image: string) => {
     props._showProgressBar();
     props._resetComment();
+    //RootNavigation.push(FILE_NAMES.POSTLIST_SCREEN,{callFor:"UserPost"});
+    //props.navigation.dispatch(StackActions.push(FILE_NAMES.POSTLIST_SCREEN, {callFor:"UserPost"}))
+
     RootNavigation.navigate(FILE_NAMES.COMMENTLIST_SCREEN, {
       id,
       commentImage: image,
@@ -66,7 +69,10 @@ const PostList = (props: any) => {
           onPress={() => {
             showComments(item.id, item.image);
           }}>
-          <Image style={styles.postImage} source={{ uri: item.image }} />
+          <Image style={{
+            width: '100%',
+            aspectRatio: 3 / 4,
+          }} source={{ uri: item.image }} />
         </TouchableOpacity>
         <Text style={styles.postLikeText}>{item.likes} Likes </Text>
 
@@ -92,7 +98,7 @@ const PostList = (props: any) => {
                 name="comment"
                 //onPress={this.loginWithFacebook}
                 size={25}></Icon>
-              <Text style={styles.profileTagtext}>Comment </Text>
+              <Text style={styles.profileTagtext}>Comment</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
@@ -224,7 +230,10 @@ const styles = StyleSheet.create({
     //backgroundColor: 'white',
     fontSize: 13,
     marginLeft: 5,
-    fontWeight: 'bold',
+    fontWeight:'bold',
+    //fontFamily: 'Poppins-Medium',
+    fontFamily: 'Raaoboto'
+    
   },
   postLikeText: {
     //backgroundColor: 'white',
@@ -238,9 +247,5 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     borderRadius: 15,
   },
-  postImage: {
-    height: 250,
-    width: 384,
-    borderRadius: 10,
-  },
+
 });

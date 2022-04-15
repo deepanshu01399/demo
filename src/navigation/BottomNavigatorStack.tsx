@@ -1,12 +1,11 @@
 
 import React, { useState } from 'react'
-import { View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import DashBoardTSX from '../screens/DashBoardTSX';
-import PostList from '../screens/PostList';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { FILE_NAMES } from '../static/Constants';
-import AppStack from './AppStack';
+import PostList from '../screens/PostList';
+import DashBoardTSX from '../screens/DashBoardTSX';
+import PeopleStack from './PeopleStack';
 
 const BottomNavigationStack=()=>{
   const Tab = createBottomTabNavigator();
@@ -17,21 +16,25 @@ const BottomNavigationStack=()=>{
          tabBarHideOnKeyboard:true,
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-          if (route.name === FILE_NAMES.APP_STACK) {
+          if (route.name === FILE_NAMES.POSTLIST_SCREEN) {
             iconName = focused
               ? 'home'
               : 'home';
-          } else if (route.name === FILE_NAMES.DASHBOARD_SCREEN) {
+          } else if (route.name === FILE_NAMES.PEOPLE_SCREEN) {
             iconName = focused ? 'user' : 'user';
           }
           // You can return any component that you like here!
-          return <Icon name={iconName} size={25} color={color}></Icon>
+          return <Icon name={iconName??''} size={30} color={color}></Icon>
         },
         tabBarActiveTintColor: 'cyan',
         tabBarInactiveTintColor: 'gray',})}
       >
-      <Tab.Screen name={FILE_NAMES.APP_STACK} component={AppStack} options={{headerShown:false}} />
-      <Tab.Screen name={FILE_NAMES.DASHBOARD_SCREEN} component={DashBoardTSX} />
+      <Tab.Screen component={PostList} name={FILE_NAMES.POSTLIST_SCREEN} options={{headerShown:false}} />
+      <Tab.Screen name={FILE_NAMES.PEOPLE_SCREEN} component={DashBoardTSX} options={{headerShown:false}}/>
+     {/*  <Tab.Screen name={FILE_NAMES.PEOPLE_STACK} component={PeopleStack}/>
+            to see the other post related info inside the tab bar then we need to use stack otherwise for single screen we can directly pass that..
+      */}
+
 
     </Tab.Navigator>
   )

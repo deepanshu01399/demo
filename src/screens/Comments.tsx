@@ -12,6 +12,7 @@ import {connect} from 'react-redux';
 import * as actions from '../redux/actionCreatorsTs';
 import MainView from './MainView';
 import {commentOwner, CommentsData} from '../models/commentList';
+import { FILE_NAMES } from '../static/Constants';
 
 const Comments = (props: any) => {
   const commentList = props?.commentList?.data ?? [];
@@ -26,6 +27,7 @@ const Comments = (props: any) => {
     props._showProgressBar();
     props._getPerSonDetail(id);
   }
+
 
   const renderItems = (item: commentOwner, index: number) => {
     return (
@@ -153,9 +155,8 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     borderRadius: 15,
   },
-  postImage: {
-    height: 250,
-    width: 384,
-    borderRadius: 10,
+  postImage:{
+    width: '100%',
+    aspectRatio: 1,
   },
 });

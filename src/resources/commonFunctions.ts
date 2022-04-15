@@ -38,7 +38,8 @@ export const getMaskedCurrencyValue = (value:number, currencySymbol:string) => {
     return returnText;
   };
 
-export function getFormattedDate(date:Date, forUI = false) {
+export function getFormattedDate(date:Date, forUI:boolean) {
+  if(date){
     let arr = date?.toString()?.split('-');
   
     let year = '';
@@ -54,10 +55,12 @@ export function getFormattedDate(date:Date, forUI = false) {
         [currentdate, month, year] = arr;
       }
     }
+    currentdate= currentdate.substring(0,2)
     if (forUI) {
       return `${currentdate}-${month}-${year}`;
     }
     return `${year}-${month}-${currentdate}`;
+  }
   }
   
 

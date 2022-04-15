@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Image,
   ScrollView,
@@ -7,13 +7,30 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import * as actions from '../redux/actionCreatorsTs';
+import { getFormattedDate } from '../resources/commonFunctions';
+import { FILE_NAMES } from '../static/Constants';
 import MainView from './MainView';
+import * as RootNavigation from "../navigation/RootNavigation"
+import { StackActions } from '@react-navigation/native';
+
 
 const PersonDetails = (props: any) => {
   console.log('PersonDetailsProps: ==>', props);
   const personDetails = props.personDetails ?? [];
+
+  const seeUsersPost = (id: Number | undefined, no: Number) => {
+    props._showProgressBar();
+    props._getUserPosts(id, no);
+    RootNavigation.push(FILE_NAMES.POSTLIST_SCREEN,{callFor:"UserPost"})
+    //props.navigation.dispatch(StackActions.push(FILE_NAMES.POSTLIST_SCREEN, {callFor:"UserPost"}))
+    //props.navigation.navigate(FILE_NAMES.APP_STACK, { screen: FILE_NAMES.POSTLIST_SCREEN, params: { callFor: "UserPost" } });
+    
+    //  props.navigation.dispatch(StackActions.push(FILE_NAMES.APP_STACK,{screen: FILE_NAMES.POSTLIST_SCREEN,params:{callFor:"UserPost"}}));//ye nahi chala
+
+  }
+
 
   return (
     <MainView>
@@ -22,8 +39,18 @@ const PersonDetails = (props: any) => {
           <ScrollView showsVerticalScrollIndicator={false}>
             <Image
               style={styles.imageViewStyle}
-              source={{uri: personDetails.picture}}
+              source={{ uri: personDetails.picture }}
             />
+            <TouchableOpacity onPress={() => seeUsersPost(personDetails.id, 10)}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  marginLeft: 10,
+                  color: "blue"
+                }}>
+                See Posts
+              </Text>
+            </TouchableOpacity>
             <View style={styles.outerBoxView}>
               <Text style={styles.textViewStyle}>Name: </Text>
               <Text style={styles.textValueViewStyle}>
@@ -38,7 +65,7 @@ const PersonDetails = (props: any) => {
             <View style={styles.outerBoxView}>
               <Text style={styles.textViewStyle}>Date Of Birth: </Text>
               <Text style={styles.textViewStyle}>
-                {personDetails.dateOfBirth}
+                {getFormattedDate(personDetails.dateOfBirth, true)}
               </Text>
             </View>
             <View style={styles.outerBoxView}>
@@ -101,6 +128,8 @@ const mapStateToProps = (state: stateProps) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     _showProgressBar: () => dispatch(actions.showProgressBar()),
+    _getUserPosts: (id:Number,number:Number) => dispatch(actions.getUserList(id,number)),
+
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(PersonDetails);

@@ -1,3 +1,4 @@
+import { StackActions } from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {
   Alert,
@@ -13,6 +14,7 @@ import {DataInterface, personList} from '../models/personsList';
 import * as actions from '../redux/actionCreatorsTs';
 import { FILE_NAMES } from '../static/Constants';
 import MainView from './MainView';
+import * as RootNavigation from "../navigation/RootNavigation"
 
 const DashBoardScreen = (props: any) => {
   console.log('props==>', props);
@@ -26,15 +28,21 @@ const DashBoardScreen = (props: any) => {
 
   const seeUsersPost=(id:Number|undefined,no:Number)=>{
   props._showProgressBar();
-    props._getUserPosts(id,no);
-    props.navigation.navigate(FILE_NAMES.POSTLIST_SCREEN,{callFor:"UserPost"});
+  props._getUserPosts(id,no);
+  //RootNavigation.push(FILE_NAMES.POSTLIST_SCREEN,{callFor:"UserPost"})
+   props.navigation.dispatch(StackActions.push(FILE_NAMES.POSTLIST_SCREEN, {callFor:"UserPost"}))
+  //props.navigation.navigate(FILE_NAMES.APP_STACK,{screen: FILE_NAMES.POSTLIST_SCREEN,params:{callFor:"UserPost"}});
+
+  //props.navigation.dispatch(StackActions.push(FILE_NAMES.APP_STACK,{screen: FILE_NAMES.POSTLIST_SCREEN,params:{callFor:"UserPost"}}));
 
   }
   const renderItems = (item: DataInterface, index: number) => {
     return (
       <TouchableOpacity onPress={() => getPersonDetail(item.id)}>
         <View style={styles.constainerStyle}>
-          <Image style={styles.imageViewStyle} source={{uri: item.picture}} />
+          <Image style={styles.imageViewStyle} 
+        
+          source={{uri: item?.picture??''}} />
           <Text
             style={{
               backgroundColor: 'white',
@@ -64,8 +72,7 @@ const DashBoardScreen = (props: any) => {
   }, []);
 
   return (
-    <MainView //style={{backgroundColor: 'cyan'}}
-    >
+    <MainView>
       <FlatList
         keyExtractor={(item, index: any) => index}
         renderItem={({item, index}) => renderItems(item, index)}
