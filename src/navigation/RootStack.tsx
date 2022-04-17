@@ -3,8 +3,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import {FILE_NAMES} from '../static/Constants';
 import SplashStack from './SplashStack';
 import {navigationRef} from './RootNavigation';
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import AppStack from './AppStack';
+import AuthStack from './AuthStack';
 
 interface RootStackProps {}
 
@@ -22,7 +23,11 @@ const RootStack = (props: RootStackProps) => {
           name={FILE_NAMES.APP_STACK}
           options={{title: 'AppStackStg'}}
         />
-        
+        <Stack.Screen
+          component={AuthStack}
+          name={FILE_NAMES.AUTH_STACK}
+          options={{title: 'AppStackStg'}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

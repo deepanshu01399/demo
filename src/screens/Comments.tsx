@@ -16,11 +16,11 @@ import { FILE_NAMES } from '../static/Constants';
 
 const Comments = (props: any) => {
   const commentList = props?.commentList?.data ?? [];
-  let commentImage = props.route.params.commentImage;
+  let commentImage = props?.route?.params?.commentImage;
 
   useEffect(() => {
     props._showProgressBar();
-    props._getCommentList(props.route.params.id);
+    props._getCommentList(props?.route?.params?.id);
   }, []);
 
   function getPersonDetail(id: Number) {

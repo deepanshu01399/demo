@@ -20,7 +20,7 @@ export const COLORS = {
   lightGray5: '#f4f4f4',
   transparent: 'transparent',
   darkgray: '#707070',
-  placeHolderColor: '#b8b8b8',
+  placeholderColor: '#b8b8b8',
   status: '#1BC63C',
   appLightGray: '#b8b8b8',
   red: '#D96464',

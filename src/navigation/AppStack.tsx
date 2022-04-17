@@ -25,7 +25,6 @@ const AppStack = () => {
       <Stack.Screen component={ProfileScreen} name={FILE_NAMES.PROFILE_SCREEN}options={{headerShown:true}} />
       <Stack.Screen component={FlatlistScreen2} name={FILE_NAMES.FLAT_SCREEN2} options={{headerShown:true}}/>
       <Stack.Screen component={FlatlistScreen} name={FILE_NAMES.FLAT_SCREEN} options={{headerShown:true}}/>
-      <Stack.Screen component={LoginScreen} name={FILE_NAMES.LOGIN_SCREEN} options={{headerShown:true}} />
       <Stack.Screen component={PostList} name={FILE_NAMES.POSTLIST_SCREEN} options={{headerShown:true}}   />
 
     </Stack.Navigator>

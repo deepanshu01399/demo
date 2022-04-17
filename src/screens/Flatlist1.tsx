@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -7,12 +7,11 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-
 } from 'react-native';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import CommonUIComponent from '../commonComponent/CommonUIComponent';
 import * as actions from '../redux/actionCreatorsTs';
-import { COLORS } from '../resources/theme';
+import {COLORS} from '../resources/theme';
 import FieldGeneratorScreen from './FieldGeneratorScreen';
 import MainView from './MainView';
 
@@ -36,7 +35,6 @@ const FlatlistScreen = (props: any) => {
   }
 
   const flateDataList = [
-
     {
       id: 1,
       name: 'deepanshu',
@@ -44,9 +42,9 @@ const FlatlistScreen = (props: any) => {
       isEmailVerified: false,
       isAgreeOnTerms: false,
       termConditions: [
-        { termCondition: "this is term Condition 1 for deepanshu" },
-        { termCondition: "this is term Condition 2 for deepanshu" }
-      ]
+        {termCondition: 'this is term Condition 1 for deepanshu'},
+        {termCondition: 'this is term Condition 2 for deepanshu'},
+      ],
     },
     {
       id: 2,
@@ -55,9 +53,9 @@ const FlatlistScreen = (props: any) => {
       isEmailVerified: false,
       isAgreeOnTerms: true,
       termConditions: [
-        { termCondition: "this is term Condition 1 for bhanu" },
-        { termCondition: "this is term Condition 2 for bhanu" }
-      ]
+        {termCondition: 'this is term Condition 1 for bhanu'},
+        {termCondition: 'this is term Condition 2 for bhanu'},
+      ],
     },
     {
       id: 3,
@@ -66,9 +64,9 @@ const FlatlistScreen = (props: any) => {
       isEmailVerified: false,
       isAgreeOnTerms: true,
       termConditions: [
-        { termCondition: "this is term Condition 1 for himanshu" },
-        { termCondition: "this is term Condition 2 for himanshu" }
-      ]
+        {termCondition: 'this is term Condition 1 for himanshu'},
+        {termCondition: 'this is term Condition 2 for himanshu'},
+      ],
     },
     {
       id: 4,
@@ -77,11 +75,11 @@ const FlatlistScreen = (props: any) => {
       isEmailVerified: true,
       isAgreeOnTerms: false,
       termConditions: [
-        { termCondition: "this is term Condition 1 for rinku" },
-        { termCondition: "this is term Condition 2 for rinku" }
-      ]
-    }
-  ]
+        {termCondition: 'this is term Condition 1 for rinku'},
+        {termCondition: 'this is term Condition 2 for rinku'},
+      ],
+    },
+  ];
 
   useEffect(() => {
     let datalist: flateDataListInterface[] = [];
@@ -93,79 +91,106 @@ const FlatlistScreen = (props: any) => {
         isAgreeOnTerms: item.isAgreeOnTerms,
         isEmailVerified: item.isEmailVerified,
         termConditions: item.termConditions,
-      }
-      datalist.push(dataitem)
-    })
-    setdata(datalist)
-
-  }, [])
+      };
+      datalist.push(dataitem);
+    });
+    setdata(datalist);
+  }, []);
 
   const renderFlateListItem = (item: flateDataListInterface, index: number) => {
     return (
-      <View style={{ marginTop: 10 }}>
+      <View style={{marginTop: 10}}>
         <CommonUIComponent
           type="cardComponent"
-          backgroundColor='lightgrey'
-          borderColor={item.isAgreeOnTerms ? COLORS.appDefaultColor : COLORS.red}
+          backgroundColor="lightgrey"
+          borderColor={
+            item.isAgreeOnTerms ? COLORS.appDefaultColor : COLORS.red
+          }
           children={
             <View>
-              <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-between" }}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
                 <CommonUIComponent
                   type="normalText"
                   label="Name"
                   textColor="black"
                 />
-                <CommonUIComponent
-                  type="normalText"
-                  label={item.name}
-                />
+                <CommonUIComponent type="normalText" label={item.name} />
               </View>
-              <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-between", alignItems: 'center' }}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
                 <CommonUIComponent
                   type="normalText"
                   label="Email"
                   textColor="black"
-
                 />
-                {currentEditUser != item.id ?
-                  <View style={{ flexDirection: 'row', justifyContent: "flex-end", alignItems: "center" }}>
-                    <CommonUIComponent
-                      type="normalText"
-                      label={item.emailId}
-                    />
+                {currentEditUser != item.id ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-end',
+                      alignItems: 'center',
+                    }}>
+                    <CommonUIComponent type="normalText" label={item.emailId} />
                     <TouchableOpacity
-                      onPress={() => { Editclicked(item, item.emailId) }}>
+                      onPress={() => {
+                        Editclicked(item, item.emailId);
+                      }}>
                       <Image
                         source={require('../assets/EditIcon.png')}
-                        style={{ height: 20, width: 20, marginLeft: 10 }}
+                        style={{height: 20, width: 20, marginLeft: 10}}
                       />
                     </TouchableOpacity>
                   </View>
-                  :
-                  <View style={{ flexDirection: 'row', justifyContent: "flex-end", alignItems: 'center' }}>
-
+                ) : (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-end',
+                      alignItems: 'center',
+                    }}>
                     <TextInput
                       autoCapitalize="none"
                       maxLength={props.maxLength}
                       editable={!props.isDisabled}
                       selectTextOnFocus={props.selectTextOnFocus}
-                      placeholder=''
-                      style={{ borderColor: COLORS.lightGray, borderWidth: 2, width: '70%', height: 35 }}
+                      placeholder=""
+                      style={{
+                        borderColor: COLORS.lightGray,
+                        borderWidth: 2,
+                        width: '70%',
+                        height: 35,
+                      }}
                       value={lable5}
                       onChangeText={text => setEditEmailValue(text)}
                     />
                     <TouchableOpacity
-                      onPress={() => { setEditEmailOk(item,index,item.id, lable5) }}>
+                      onPress={() => {
+                        setEditEmailOk(item, index, item.id, lable5);
+                      }}>
                       <Image
                         source={require('../assets/checked.png')}
-                        style={{ height: 20, width: 20, marginLeft: 10 }}
+                        style={{height: 20, width: 20, marginLeft: 10}}
                       />
                     </TouchableOpacity>
                   </View>
-
-                }
+                )}
               </View>
-              <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-between" }}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
                 <CommonUIComponent
                   type="normalText"
                   label="Is email Verified"
@@ -176,9 +201,13 @@ const FlatlistScreen = (props: any) => {
                   label={item.isEmailVerified}
                   textColor={item.isEmailVerified ? COLORS.green : COLORS.red}
                 />
-
               </View>
-              <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-between" }}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
                 <CommonUIComponent
                   type="normalText"
                   label="Agree on Terms & conditions"
@@ -187,12 +216,13 @@ const FlatlistScreen = (props: any) => {
                 <FieldGeneratorScreen
                   lable="check"
                   isActive={item.isAgreeOnTerms}
-                  callBack={(data: boolean) => {setCheckBox(item,index,item.id,data?'true':'false')}}
-                  type={"PressableCheck"}
+                  callBack={(data: boolean) => {
+                    setCheckBox(item, index, item.id, data ? 'true' : 'false');
+                  }}
+                  type={'PressableCheck'}
                   isDisabled={false}
                   needtoShowTextMsg={false}
                 />
-
               </View>
               <CommonUIComponent
                 type="normalText"
@@ -202,69 +232,74 @@ const FlatlistScreen = (props: any) => {
               <FlatList
                 data={item.termConditions}
                 keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item, index }) =>
+                renderItem={({item, index}) => (
                   <CommonUIComponent
                     type="normalText"
                     label={`* ${index + 1} : ${item.termCondition}`}
                   />
-                }
+                )}
               />
-
             </View>
           }
-
         />
       </View>
-    )
-
-  }
+    );
+  };
 
   const submitList = () => {
-    console.log("on submit---------->")
-
-
-  }
+    console.log('on submit---------->');
+  };
   const Editclicked = (data: flateDataListInterface, email: string) => {
-    console.log("on edit---------->")
+    console.log('on edit---------->');
     if (email) {
-      setlable5(email)
+      setlable5(email);
     }
-    setCurrentEditUser(data.id)
-
-
-  }
+    setCurrentEditUser(data.id);
+  };
 
   const setEditEmailValue = (data: string) => {
-    console.log("on editemail value---------->", data)
-    setlable5(data)
-
-  }
-  const setEditEmailOk = (data: flateDataListInterface,index:number, id:number,value: string) => {
-    console.log("on edit---------->")
-    updateUserDataList("updateEmail",index,id,value );
+    console.log('on editemail value---------->', data);
+    setlable5(data);
+  };
+  const setEditEmailOk = (
+    data: flateDataListInterface,
+    index: number,
+    id: number,
+    value: string,
+  ) => {
+    console.log('on edit---------->');
+    updateUserDataList('updateEmail', index, id, value);
     setCurrentEditUser(0);
+  };
+  const setCheckBox = (
+    data: flateDataListInterface,
+    index: number,
+    id: number,
+    value: string,
+  ) => {
+    console.log('on edit---------->');
+    updateUserDataList('updateCheckItem', index, id, value);
+  };
 
-  }
-  const setCheckBox = (data: flateDataListInterface,index:number, id:number,value: string) => {
-    console.log("on edit---------->")
-    updateUserDataList("updateCheckItem",index,id,value);
-
-  }
-
-  const updateUserDataList = (key: string,index:number, id:number,value: string )=> {
-    let abc:(any[])=[];
-    let preVdata:flateDataListInterface[] = [ ...data ];
+  const updateUserDataList = (
+    key: string,
+    index: number,
+    id: number,
+    value: string,
+  ) => {
+    let abc: any[] = [];
+    let preVdata: flateDataListInterface[] = [...data];
 
     switch (key) {
-      case "updateEmail": 
+      case 'updateEmail':
         // abc= data.map((item)=>
         //   item.id===id?{...item,emailId:value}:{item}
         // )
 
         preVdata[index] = {...data[index], emailId: value};
-        console.log("2===========",preVdata[index])
+        console.log('2===========', preVdata[index]);
 
-        setdata(preVdata)
+        setdata(preVdata);
 
         break;
       case 'updateCheckItem':
@@ -272,10 +307,13 @@ const FlatlistScreen = (props: any) => {
         //   item.id===id?{...item,isAgreeOnTerms:value}:{item}
         // )
 
-        preVdata[index] = {...data[index], isAgreeOnTerms: value=="true"?true:false};
-        console.log("22===========",preVdata[index])
+        preVdata[index] = {
+          ...data[index],
+          isAgreeOnTerms: value == 'true' ? true : false,
+        };
+        console.log('22===========', preVdata[index]);
 
-         setdata(preVdata)
+        setdata(preVdata);
 
         //setdata(abc)
 
@@ -283,19 +321,23 @@ const FlatlistScreen = (props: any) => {
       default:
         return data;
     }
-
-
-  }
+  };
 
   return (
     <MainView>
-      <ScrollView style={{ marginBottom: 20, marginHorizontal: 8 }}>
+      <ScrollView style={{marginBottom: 20, marginHorizontal: 8}}>
         <CommonUIComponent
           type="headerText"
           label="Hello FlateList"
           textColor="red"
         />
-        <View style={{ flex: 1, flexDirection: "row", justifyContent: 'center', alignItems: 'center' }}>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
           <CommonUIComponent
             type="normalText"
             label="Hello FlateList"
@@ -303,17 +345,17 @@ const FlatlistScreen = (props: any) => {
           />
 
           <FieldGeneratorScreen
-            lable={"submit list"}
+            lable={'submit list'}
             callBack={() => submitList()}
-            type={"PressableBtn"}
+            type={'PressableBtn'}
             isDisabled={false}
-            iconAlignment={"alignEnd"}
+            iconAlignment={'alignEnd'}
             needtoShowIcon={false}
           />
         </View>
         <FlatList
           data={data}
-          renderItem={({ item, index }) => renderFlateListItem(item, index)}
+          renderItem={({item, index}) => renderFlateListItem(item, index)}
           keyExtractor={(item, index) => index.toString()}
         />
       </ScrollView>
@@ -331,7 +373,6 @@ const mapStateToProps = (state: stateProps) => {
   return {
     isLoading: state.commonReducer.isLoading,
     error: state.commonReducer.error,
-
   };
 };
 
@@ -340,7 +381,6 @@ const mapDispatchToProps = (dispatch: any) => {
     _showProgressBar: () => dispatch(actions.showProgressBar()),
   };
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(FlatlistScreen);
 
@@ -352,6 +392,12 @@ const styles = StyleSheet.create({
     marginVertical: 3,
     borderRadius: 10,
   },
-  headerStyle: { flex: 1, color: 'black', fontWeight: '700', fontSize: 20, alignSelf: "center", marginVertical: 15 }
-
+  headerStyle: {
+    flex: 1,
+    color: 'black',
+    fontWeight: '700',
+    fontSize: 20,
+    alignSelf: 'center',
+    marginVertical: 15,
+  },
 });

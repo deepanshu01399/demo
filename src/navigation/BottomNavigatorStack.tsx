@@ -22,6 +22,8 @@ const BottomNavigationStack=()=>{
               : 'home';
           } else if (route.name === FILE_NAMES.PEOPLE_SCREEN) {
             iconName = focused ? 'user' : 'user';
+          }else if(route.name===FILE_NAMES.PEOPLE_STACK){
+            iconName=focused?'folder':'fly';
           }
           // You can return any component that you like here!
           return <Icon name={iconName??''} size={30} color={color}></Icon>
@@ -31,11 +33,9 @@ const BottomNavigationStack=()=>{
       >
       <Tab.Screen component={PostList} name={FILE_NAMES.POSTLIST_SCREEN} options={{headerShown:false}} />
       <Tab.Screen name={FILE_NAMES.PEOPLE_SCREEN} component={DashBoardTSX} options={{headerShown:false}}/>
-     {/*  <Tab.Screen name={FILE_NAMES.PEOPLE_STACK} component={PeopleStack}/>
-            to see the other post related info inside the tab bar then we need to use stack otherwise for single screen we can directly pass that..
-      */}
-
-
+      <Tab.Screen name={FILE_NAMES.PEOPLE_STACK} component={PeopleStack} options={{headerShown:false}}/>
+      {/* to see the other post related info inside the tab bar then we need to use stack otherwise for single screen we can directly pass that.. */}
+      
     </Tab.Navigator>
   )
 }

@@ -48,7 +48,7 @@ interface PickerProps {
     callback: Function;
     type: string;
     fetchObject?: boolean;
-    placeHolder?: string;
+    placeholder?: string;
     isActive?: boolean;
     value?: string;
 }
@@ -128,8 +128,11 @@ const EditTextComponent = (props: any) => {
                 maxLength={props.maxLength}
                 editable={!props.isDisabled}
                 selectTextOnFocus={props.selectTextOnFocus}
-                placeholder=''
+                placeholder={props.placeholder}
                 value={inputValue}
+                returnKeyType='default'
+                secureTextEntry={props.inputType=='password'?true:false}
+            
                 onChangeText={text => {
                     if (props.inputType == 'ALPHABETS') {
                         let text1 = text.replace(/[^a-zA-Z]/g, '')
@@ -391,7 +394,7 @@ const FieldGeneratorScreen = (props: any) => {
                     data={props?.data}
                     children={props?.children}
                     value={props?.value}
-                    placeHolder={props?.placeHolder}
+                    placeholder={props?.placeholder}
                 />)
 
         case "Date_picker":

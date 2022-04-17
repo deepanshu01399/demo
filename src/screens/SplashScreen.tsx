@@ -2,7 +2,8 @@ import React, {useEffect} from 'react';
 import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import * as actions from '../redux/actionCreatorsTs';
-import {FILE_NAMES} from '../static/Constants';
+import {FILE_NAMES, STORAGE_KEY} from '../static/Constants';
+import LocalStorage from '../static/LocalStorage';
 import MainView from './MainView';
 
 const SplashScreen = (props: any) => {
@@ -12,9 +13,16 @@ const SplashScreen = (props: any) => {
   useEffect(() => {
     props._getPostList(10);
     setTimeout(() => {
-      props.navigation.replace(FILE_NAMES.APP_STACK);
+      navigateTonextScreen();
     }, 1500);
   }, []);
+
+  const navigateTonextScreen = async () => {
+    let isloggedIn = await LocalStorage.getFromLocal(STORAGE_KEY.IS_LOGGED_IN);
+    if (isloggedIn) {
+      props.navigation.replace(FILE_NAMES.APP_STACK);
+    } else props.navigation.replace(FILE_NAMES.AUTH_STACK);
+  };
 
   return (
     <MainView>
@@ -41,7 +49,7 @@ const mapStateToProps = (state: stateProps) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    _getPostList: (data:Number) => dispatch(actions.getPostList(data)),
+    _getPostList: (data: Number) => dispatch(actions.getPostList(data)),
     _showProgressBar: () => dispatch(actions.showProgressBar()),
   };
 };

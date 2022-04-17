@@ -7,7 +7,7 @@ import PostList from '../screens/PostList';
 import ProfileScreen from '../screens/ProfileScreen';
 import { FILE_NAMES } from '../static/Constants';
 
-const PeopleStack = () => {
+const PeopleStack = () => {//not any requirement .
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator
