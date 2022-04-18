@@ -77,7 +77,7 @@ const LoginScreen = (props: any) => {
               type={'PressableBtn'}
               isDisabled={false}
               iconAlignment={'justRight'}
-              backgroundColor={COLORS.appDefaultColor}
+              backgroundColor={'cyan'}
               textColor={COLORS.white}
               needtoShowIcon={false}
             />

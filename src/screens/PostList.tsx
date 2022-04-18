@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Alert,
   FlatList,
@@ -9,27 +9,24 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { connect } from 'react-redux';
-import { aboutPost } from '../models/postList';
+import {connect} from 'react-redux';
+import {aboutPost} from '../models/postList';
 import * as actions from '../redux/actionCreatorsTs';
 import MainView from './MainView';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import * as RootNavigation from '../navigation/RootNavigation';
-import { FILE_NAMES } from '../static/Constants';
-import { RESETCOMMENT } from '../redux/actionTypes';
+import {FILE_NAMES} from '../static/Constants';
+import {RESETCOMMENT} from '../redux/actionTypes';
 import crashlytics from '@react-native-firebase/crashlytics';
-
-
+import CommonHeader from './CommonHeader';
 
 const PostList = (props: any) => {
-  console.log('props==>', props);
-  const isLoading = props.isLoading;
+  console.log('props----------==>', props);
   let postList;
   let userPosts;
-  if (props.route.params?.callFor !== "UserPost")
+  if (props.route.params?.callFor !== 'UserPost')
     postList = props.postList.data ?? [];
-  else
-    userPosts = props.userPostList?.data ?? [];
+  else userPosts = props.userPostList?.data ?? [];
 
   let postLimit = 10;
 
@@ -57,7 +54,7 @@ const PostList = (props: any) => {
           <View style={styles.profileHeader}>
             <Image
               style={styles.profileHeaderImage}
-              source={{ uri: item.owner.picture }}
+              source={{uri: item.owner.picture}}
             />
             <Text style={styles.profileHeadertext}>
               {item.owner.title}.{item.owner.firstName} {item.owner.lastName}
@@ -69,17 +66,21 @@ const PostList = (props: any) => {
           onPress={() => {
             showComments(item.id, item.image);
           }}>
-          <Image style={{
-            width: '100%',
-            aspectRatio: 3 / 4,
-          }} source={{ uri: item.image }} />
+          <Image
+            style={{
+              width: '100%',
+              aspectRatio: 3 / 4,
+            }}
+            source={{uri: item.image}}
+          />
         </TouchableOpacity>
         <Text style={styles.postLikeText}>{item.likes} Likes </Text>
 
         <View style={styles.commentView}>
-          <TouchableOpacity onPress={() => {
-            //	crashlytics().crash();
-          }}>
+          <TouchableOpacity
+            onPress={() => {
+              //	crashlytics().crash();
+            }}>
             <View style={styles.commentItem}>
               <Icon
                 name="thumbs-up"
@@ -104,9 +105,7 @@ const PostList = (props: any) => {
           <TouchableOpacity
             onPress={() => {
               onShare(item.image);
-            }}
-          >
-
+            }}>
             <View style={styles.commentItem}>
               {/* color="black" */}
               <Icon name="share" size={30} light />
@@ -121,14 +120,35 @@ const PostList = (props: any) => {
   const loadMorePost = () => {
     postLimit = postLimit + 10;
     props._getPostList(postLimit);
-  }
+  };
+  const onPressLeftButton = (needToShow:string) => {
+    console.log("---",props.navigation)
+    if(needToShow=='hamburger')
+      props.navigation.openDrawer();
+    else
+      props.navigation.pop();
+  
+  };
 
   return (
     <MainView>
+      <CommonHeader
+        title={'Posts'}
+        isBackButton={true}
+        leftButtonType={props?.route?.params?.leftIconName}
+        onPressLeftButton={() => onPressLeftButton(props?.route?.params?.leftIconName)}
+        navigation={props?.navigation}
+        isRightButton={props?.route?.params?.needToShowRightIcon}
+        rightButtonType={'search'}
+        onPressRightButton={() => {
+          Alert.alert('clicked on Notification!');
+        }}
+      />
+
       <FlatList
         keyExtractor={(item, index: any) => index}
-        renderItem={({ item, index }) => renderItems(item, index)}
-        data={props.route.params?.callFor !== "UserPost" ? postList : userPosts}
+        renderItem={({item, index}) => renderItems(item, index)}
+        data={props.route.params?.callFor !== 'UserPost' ? postList : userPosts}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
           <Text style={styles.profileHeadertext}>Loading from ...</Text>
@@ -160,11 +180,11 @@ const mapDispatchToProps = (dispatch: any) => {
     _getPostList: (data: Number) => dispatch(actions.getPostList(data)),
     _showProgressBar: () => dispatch(actions.showProgressBar()),
     _getPerSonDetail: (id: Number) => dispatch(actions.getPersonDetail(id)),
-    _resetComment: () => dispatch({ type: RESETCOMMENT }),
+    _resetComment: () => dispatch({type: RESETCOMMENT}),
   };
 };
 const onShare = async (url: string) => {
-  console.log("api mimage :", url)
+  console.log('api mimage :', url);
   try {
     const result = await Share.share({
       title: 'Post by Dummy Api',
@@ -230,10 +250,9 @@ const styles = StyleSheet.create({
     //backgroundColor: 'white',
     fontSize: 13,
     marginLeft: 5,
-    fontWeight:'bold',
+    fontWeight: 'bold',
     //fontFamily: 'Poppins-Medium',
-    fontFamily: 'Raaoboto'
-    
+    fontFamily: 'Raaoboto',
   },
   postLikeText: {
     //backgroundColor: 'white',
@@ -247,5 +266,4 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     borderRadius: 15,
   },
-
 });

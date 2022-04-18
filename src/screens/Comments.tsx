@@ -3,6 +3,7 @@ import {
   Alert,
   FlatList,
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -13,6 +14,10 @@ import * as actions from '../redux/actionCreatorsTs';
 import MainView from './MainView';
 import {commentOwner, CommentsData} from '../models/commentList';
 import { FILE_NAMES } from '../static/Constants';
+import CommonHeader from './CommonHeader';
+import { navigationRef } from '../navigation/RootNavigation';
+import { StackActions } from '@react-navigation/native';
+import PostList from './PostList';
 
 const Comments = (props: any) => {
   const commentList = props?.commentList?.data ?? [];
@@ -50,8 +55,33 @@ const Comments = (props: any) => {
       </View>
     );
   };
+  const onPressLeftButton = () => {
+    console.log("---",props?.navigation)
+    if(props.navigation.canGoBack() )
+     props.navigation.goBack()
+
+   // props?.navigation.pop();
+    //props.navigation.dispatch(StackActions.pop())
+    // props?.navigation.navigate('Root', {
+    //   screen: 'Settings',
+    //   initial: false,
+    // });
+  };
+
+
   return (
     <MainView>
+      <CommonHeader
+        title={'Comments'}
+        isBackButton={true}
+        leftButtonType={'back'}
+        onPressLeftButton={() => onPressLeftButton()}
+        navigation={props?.navigation}
+        isRightButton={false}
+       
+      />
+
+      <ScrollView showsVerticalScrollIndicator={false}>
       <View style={{flexDirection: 'column'}}>
         <Image
           style={styles.postImage}
@@ -76,6 +106,8 @@ const Comments = (props: any) => {
           <Text style={styles.nodataTxt}>No comment til now...</Text>
         )}
       </View>
+
+      </ScrollView>
     </MainView>
   );
 };

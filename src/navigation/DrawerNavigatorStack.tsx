@@ -18,7 +18,7 @@ import PersonDetails from '../screens/PersonDetails';
 import LocalStorage from '../static/LocalStorage';
 
 
-const DrawerNavigationStack = (navigation:any) => {
+const DrawerNavigationStack = (props:any) => {
   const [username,setUserName] = useState('');
 
   useEffect(()=>{
@@ -37,6 +37,7 @@ const DrawerNavigationStack = (navigation:any) => {
   return (
     <Drawer.Navigator
       screenOptions={{ swipeEnabled: false ,
+      headerShown:false,
         headerStyle: {
           backgroundColor: 'lightblue',
           height: 50,
@@ -69,13 +70,13 @@ const DrawerNavigationStack = (navigation:any) => {
 
       }} />
       {/* inside the drawer dikhani hai agar ui to yaha r dale screens vanra bhar} */}
-      <Drawer.Screen component={PersonDetails} name={FILE_NAMES.PERSONDETAIL_SCREEN} options={{headerShown:true}} />
-      <Drawer.Screen component={Comments} name={FILE_NAMES.COMMENTLIST_SCREEN} options={{headerShown:true}}/>
-      <Drawer.Screen component={LineCharts} name={FILE_NAMES.LINECHART_SCREEN}options={{headerShown:true}} />
-      <Drawer.Screen component={ProfileScreen} name={FILE_NAMES.PROFILE_SCREEN}options={{headerShown:true}} />
-      <Drawer.Screen component={Flatlist1} name={FILE_NAMES.FLAT_SCREEN2} options={{headerShown:true}}/>
-      <Drawer.Screen component={Flatlist2} name={FILE_NAMES.FLAT_SCREEN} options={{headerShown:true}}/>
-      <Drawer.Screen component={PostList} name={FILE_NAMES.POSTLIST_SCREEN} options={{headerShown:true}}   />
+      <Drawer.Screen component={PersonDetails} name={FILE_NAMES.PERSONDETAIL_SCREEN} options={{headerShown:false}} />
+      <Drawer.Screen component={Comments} name={FILE_NAMES.COMMENTLIST_SCREEN} options={{headerShown:false}}/>
+      <Drawer.Screen component={LineCharts} name={FILE_NAMES.LINECHART_SCREEN}options={{headerShown:false}} />
+      <Drawer.Screen component={ProfileScreen} name={FILE_NAMES.PROFILE_SCREEN}options={{headerShown:false}} />
+      <Drawer.Screen component={Flatlist1} name={FILE_NAMES.FLAT_SCREEN2} options={{headerShown:false}}/>
+      <Drawer.Screen component={Flatlist2} name={FILE_NAMES.FLAT_SCREEN} options={{headerShown:false}}/>
+      <Drawer.Screen component={PostList} name={FILE_NAMES.POSTLIST_SCREEN} options={{headerShown:false}}   />
 
 
     </Drawer.Navigator>

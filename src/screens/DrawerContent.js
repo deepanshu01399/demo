@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   TouchableOpacity,
   View,
@@ -7,13 +7,13 @@ import {
   FlatList,
   Alert,
 } from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import {connect} from 'react-redux';
+import { ScrollView } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
 import CommonUIComponent from '../commonComponent/CommonUIComponent';
 import * as actions from '../redux/actionCreatorsTs';
-import {Assets} from '../resources/Assets';
-import {COLORS} from '../resources/theme';
-import {FILE_NAMES, STORAGE_KEY} from '../static/Constants';
+import { Assets } from '../resources/Assets';
+import { COLORS } from '../resources/theme';
+import { FILE_NAMES, STORAGE_KEY } from '../static/Constants';
 import LocalStorage from '../static/LocalStorage';
 
 const DrawerContent = props => {
@@ -23,7 +23,7 @@ const DrawerContent = props => {
   const [insideSetting, setInsideSetting] = useState(false);
   const [userName, setUserName] = useState('');
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   const handleProfileNavigate = () => {
     console.log('handle profile navigate');
@@ -53,15 +53,15 @@ const DrawerContent = props => {
       option: [],
       navigateTo: FILE_NAMES.BOTTOM_TAB,
     },
-    {key: 'login', value: 'Login', navigateTo: FILE_NAMES.LOGIN_SCREEN},
+    { key: 'login', value: 'Login', navigateTo: FILE_NAMES.LOGIN_SCREEN },
     {
       key: 'profile',
       value: 'Profile',
       option: [],
       navigateTo: FILE_NAMES.PERSONDETAIL_SCREEN,
     },
-    {key: 'settings', value: 'Settings', option: settingOptions},
-    {key: 'flatlist1', value: 'Flat List1', navigateTo: FILE_NAMES.FLAT_SCREEN},
+    { key: 'settings', value: 'Settings', option: settingOptions },
+    { key: 'flatlist1', value: 'Flat List1', navigateTo: FILE_NAMES.FLAT_SCREEN },
     {
       key: 'flatlist2',
       value: 'Flat List2',
@@ -119,8 +119,8 @@ const DrawerContent = props => {
             updateCheckedValue == 'settings'
               ? 'white'
               : item.key === updateCheckedValue
-              ? COLORS.dimAppBlue
-              : 'white',
+                ? 'cyan'
+                : 'white',
         }}
         onPress={() => {
           setCheckedValue(item.key);
@@ -143,31 +143,31 @@ const DrawerContent = props => {
         {updateCheckedValue == 'settings' || insideSetting
           ? item?.option?.length > 0
             ? item.option.map(item => (
-                <TouchableOpacity
-                  style={{
-                    padding: 10,
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    backgroundColor:
-                      item.key === updateCheckedValue
-                        ? COLORS.dimAppBlue
-                        : 'white',
-                  }}
-                  onPress={() => {
-                    setCheckedValue(item.key);
-                    setInsideSetting(true);
-                    item.navigateTo
-                      ? props.navigation.navigate(item?.navigateTo)
-                      : null;
-                  }}>
-                  <CommonUIComponent
-                    type="normalText"
-                    label={`${item.value}`}
-                    fontSize={16}
-                    inbold={true}
-                  />
-                </TouchableOpacity>
-              ))
+              <TouchableOpacity
+                style={{
+                  padding: 10,
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  backgroundColor:
+                    item.key === updateCheckedValue
+                      ? 'cyan'
+                      : 'white',
+                }}
+                onPress={() => {
+                  setCheckedValue(item.key);
+                  setInsideSetting(true);
+                  item.navigateTo
+                    ? props.navigation.navigate(item?.navigateTo)
+                    : null;
+                }}>
+                <CommonUIComponent
+                  type="normalText"
+                  label={`${item.value}`}
+                  fontSize={16}
+                  inbold={true}
+                />
+              </TouchableOpacity>
+            ))
             : null
           : null}
       </TouchableOpacity>
@@ -188,7 +188,7 @@ const DrawerContent = props => {
           style={{
             flexDirection: 'column',
             minHeight: 200,
-            backgroundColor: COLORS.appDefaultColor,
+            backgroundColor: 'cyan',
             borderBottomLeftRadius: 20,
             borderBottomRightRadius: 20,
             flexDirection: 'column',
@@ -198,12 +198,11 @@ const DrawerContent = props => {
           }}>
           <Image
             source={
-              Assets.checked
+              Assets.people
               //</View>  ? {uri: `data:image/gif;base64,${imagePath}`}
               //  : Assets.avatar
             }
-            size={10}
-            style={{alignSelf: 'center'}}></Image>
+            style={{ alignSelf: 'center', height: 80, width: 80, marginBottom: 10 }}></Image>
           <Text style={{}}>{userName + ' ' + 'lastName'}</Text>
           <Text
             style={{
@@ -217,13 +216,13 @@ const DrawerContent = props => {
       </TouchableOpacity>
 
       <FlatList
-        style={{padding: 1}}
+        style={{ padding: 1 }}
         data={dashboardItemlist}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({item}) => renderDrawerItem(item)}
+        renderItem={({ item }) => renderDrawerItem(item)}
       />
 
-      <View style={{alignItems: 'center', marginBottom: 12}}>
+      <View style={{ alignItems: 'center', marginBottom: 12 }}>
         <Text>version 1.0.1</Text>
       </View>
     </View>
@@ -231,7 +230,7 @@ const DrawerContent = props => {
 };
 
 const mapStateToProps = state => {
-  state = {...state.commonRedcuer}; //...state.otherreducer}
+  state = { ...state.commonRedcuer }; //...state.otherreducer}
   return {
     isLoading: state.isLoading,
     error: state.error,

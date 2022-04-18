@@ -31,7 +31,7 @@ const BottomNavigationStack=()=>{
         tabBarActiveTintColor: 'cyan',
         tabBarInactiveTintColor: 'gray',})}
       >
-      <Tab.Screen component={PostList} name={FILE_NAMES.POSTLIST_SCREEN} options={{headerShown:false}} />
+      <Tab.Screen name={FILE_NAMES.POSTLIST_SCREEN} component={PostList} options={{headerShown:false}} initialParams={{leftIconName:'hamburger',needToShowRightIcon:true}}/>
       <Tab.Screen name={FILE_NAMES.PEOPLE_SCREEN} component={DashBoardTSX} options={{headerShown:false}}/>
       <Tab.Screen name={FILE_NAMES.PEOPLE_STACK} component={PeopleStack} options={{headerShown:false}}/>
       {/* to see the other post related info inside the tab bar then we need to use stack otherwise for single screen we can directly pass that.. */}

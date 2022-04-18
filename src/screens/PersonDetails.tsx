@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
+  Alert,
   Image,
   ScrollView,
   StyleSheet,
@@ -14,6 +15,7 @@ import { FILE_NAMES } from '../static/Constants';
 import MainView from './MainView';
 import * as RootNavigation from "../navigation/RootNavigation"
 import { StackActions } from '@react-navigation/native';
+import CommonHeader from './CommonHeader';
 
 
 const PersonDetails = (props: any) => {
@@ -26,14 +28,25 @@ const PersonDetails = (props: any) => {
     RootNavigation.push(FILE_NAMES.POSTLIST_SCREEN,{callFor:"UserPost"})
     //props.navigation.dispatch(StackActions.push(FILE_NAMES.POSTLIST_SCREEN, {callFor:"UserPost"}))
     //props.navigation.navigate(FILE_NAMES.APP_STACK, { screen: FILE_NAMES.POSTLIST_SCREEN, params: { callFor: "UserPost" } });
-    
     //  props.navigation.dispatch(StackActions.push(FILE_NAMES.APP_STACK,{screen: FILE_NAMES.POSTLIST_SCREEN,params:{callFor:"UserPost"}}));//ye nahi chala
 
   }
-
+  const onPressLeftButton = () => {
+    console.log("---",props.navigation)
+    props?.navigation.goBack()
+  };
 
   return (
     <MainView>
+      <CommonHeader
+        title={'Details'}
+        isBackButton={true}
+        leftButtonType={'back'}
+        onPressLeftButton={() => onPressLeftButton()}
+        navigation={props?.navigation}
+        isRightButton={false}
+       
+      />
       {personDetails != null || personDetails != undefined ? (
         <>
           <ScrollView showsVerticalScrollIndicator={false}>

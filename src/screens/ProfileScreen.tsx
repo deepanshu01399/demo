@@ -17,6 +17,7 @@ import FieldGeneratorScreen from './FieldGeneratorScreen';
 import MainView from './MainView';
 import { launchCamera, launchImageLibrary, ImagePickerResponse } from 'react-native-image-picker';
 import { PermissionsAndroid } from 'react-native';
+import CommonHeader from './CommonHeader';
 
 
 
@@ -137,10 +138,25 @@ const ProfileScreen = (props: any) => {
     // })
 
   }
-
+  const onPressLeftButton = () => {
+    console.log("---",props.navigation)
+  props.navigation.openDrawer();
+  };
 
   return (
     <MainView>
+        <CommonHeader
+        title={'Posts'}
+        isBackButton={true}
+        leftButtonType={'hamburger'}
+        onPressLeftButton={() => onPressLeftButton()}
+        navigation={props?.navigation}
+        isRightButton={true}
+        rightButtonType={'search'}
+        onPressRightButton={() => {
+          Alert.alert('clicked on Notification!');
+        }}
+      />
       <ScrollView style={{ marginBottom: 20, marginHorizontal: 8 }}>
         <CommonUIComponent
           type="headerText"

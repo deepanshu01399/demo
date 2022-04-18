@@ -15,6 +15,7 @@ import * as actions from '../redux/actionCreatorsTs';
 import { FILE_NAMES } from '../static/Constants';
 import MainView from './MainView';
 import * as RootNavigation from "../navigation/RootNavigation"
+import CommonHeader from './CommonHeader';
 
 const DashBoardScreen = (props: any) => {
   console.log('props==>', props);
@@ -71,8 +72,26 @@ const DashBoardScreen = (props: any) => {
     props._getUserLists();
   }, []);
 
+  const onPressLeftButton = () => {
+    console.log("---",props.navigation)
+  props.navigation.openDrawer();
+  };
+ 
+
   return (
     <MainView>
+        <CommonHeader
+        title={'People'}
+        isBackButton={true}
+        leftButtonType={'hamburger'}
+        onPressLeftButton={() => onPressLeftButton()}
+        navigation={props?.navigation}
+        isRightButton={true}
+        rightButtonType={'search'}
+        onPressRightButton={() => {
+          Alert.alert('clicked on Notification!');
+        }}
+      />
       <FlatList
         keyExtractor={(item, index: any) => index}
         renderItem={({item, index}) => renderItems(item, index)}
