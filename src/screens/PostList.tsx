@@ -1,11 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
   Alert,
+  BackHandler,
   FlatList,
   Image,
   Share,
   StyleSheet,
   Text,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -19,8 +21,44 @@ import {FILE_NAMES} from '../static/Constants';
 import {RESETCOMMENT} from '../redux/actionTypes';
 import crashlytics from '@react-native-firebase/crashlytics';
 import CommonHeader from './CommonHeader';
+import {useNavigationState} from '@react-navigation/native';
 
 const PostList = (props: any) => {
+  const index = useNavigationState(state => state.index);
+  let backClickCount = 0;
+
+  useEffect(() => {
+    if (index == 0) {
+      BackHandler.addEventListener('hardwareBackPress', backAction);
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', backAction);
+    }
+  }, [index]);
+
+  const backAction = () => {
+
+    // Alert.alert("Hold on!", "Are you sure you want to Exit App?", [
+    //     {
+    //         text: "Cancel",
+    //         onPress: () => null,
+    //         style: "cancel"
+    //     },
+    //     { text: "YES", onPress: () => BackHandler.exitApp() }
+    // ]);
+
+    setTimeout(() => {
+      backClickCount = 0;
+      console.log('exituseeffect------', backClickCount);
+    }, 2000); // 2 seconds to tap second-time
+    console.log('exitapp------', backClickCount);
+
+    if (backClickCount == 0) {
+      backClickCount = 1;
+      ToastAndroid.show('press double back btn to exit ', ToastAndroid.SHORT);
+    } else if (backClickCount == 1) BackHandler.exitApp();
+    return true;
+  };
+
   console.log('props----------==>', props);
   let postList;
   let userPosts;
@@ -121,13 +159,10 @@ const PostList = (props: any) => {
     postLimit = postLimit + 10;
     props._getPostList(postLimit);
   };
-  const onPressLeftButton = (needToShow:string) => {
-    console.log("---",props.navigation)
-    if(needToShow=='hamburger')
-      props.navigation.openDrawer();
-    else
-      props.navigation.pop();
-  
+  const onPressLeftButton = (needToShow: string) => {
+    console.log('---', props.navigation);
+    if (needToShow == 'hamburger') props.navigation.openDrawer();
+    else props.navigation.pop();
   };
 
   return (
@@ -136,7 +171,9 @@ const PostList = (props: any) => {
         title={'Posts'}
         isBackButton={true}
         leftButtonType={props?.route?.params?.leftIconName}
-        onPressLeftButton={() => onPressLeftButton(props?.route?.params?.leftIconName)}
+        onPressLeftButton={() =>
+          onPressLeftButton(props?.route?.params?.leftIconName)
+        }
         navigation={props?.navigation}
         isRightButton={props?.route?.params?.needToShowRightIcon}
         rightButtonType={'search'}

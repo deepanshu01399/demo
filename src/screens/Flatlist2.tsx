@@ -2,16 +2,20 @@ import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
+  LayoutAnimation,
+  Platform,
   ScrollView,
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  UIManager,
   View,
 } from 'react-native';
 import {connect} from 'react-redux';
 import CommonUIComponent from '../commonComponent/CommonUIComponent';
 import * as actions from '../redux/actionCreatorsTs';
 import {COLORS} from '../resources/theme';
+import CommonHeader from './CommonHeader';
 import FieldGeneratorScreen from './FieldGeneratorScreen';
 import MainView from './MainView';
 
@@ -58,6 +62,9 @@ const FlatlistScreen2 = (props: any) => {
   ];
 
   useEffect(() => {
+    if(Platform.OS=='android'){
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
     let datalist: flateDataListInterface[] = [];
     flateDataList.forEach((item, index) => {
       let dataitem: flateDataListInterface = {
@@ -77,6 +84,7 @@ const FlatlistScreen2 = (props: any) => {
     console.log(data);
   };
   const addItemToList = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     const item: flateDataListInterface = {
       id: data.length,
       name: name,
@@ -93,6 +101,8 @@ const FlatlistScreen2 = (props: any) => {
   };
 
   const addmoreItems = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+
     setNameValue('');
     setEmail('');
     setisAggreeOnTerms(false);
@@ -484,9 +494,25 @@ const FlatlistScreen2 = (props: any) => {
       </View>
     );
   };
+  const onPressLeftButton = () => {
+   
+      props.navigation.goBack();
+  
+  };
 
   return (
     <MainView>
+       <CommonHeader
+        title={'Posts'}
+        isBackButton={true}
+        leftButtonType={'back'}
+        onPressLeftButton={() => onPressLeftButton()}
+        navigation={props?.navigation}
+        isRightButton={false}
+        rightButtonType={'search'}
+       
+      />
+
       <ScrollView style={{marginBottom: 20, marginHorizontal: 8}}>
         <CommonUIComponent
           type="headerText"
