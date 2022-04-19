@@ -16,7 +16,8 @@ var LocalStorage = {
 	getFromLocal: async (key:string) => {
 		if (key !== undefined && key!==null) {
 			let res = await AsyncStorage.getItem(key);
-			if (res !== undefined ) {
+			console.log('res-',res)
+			if (res !== undefined && res!==null) {
 				return LocalStorage.isJsonParsable(res) ? JSON.parse(res??'') : res;
 			} else {
 				return null;
@@ -25,7 +26,7 @@ var LocalStorage = {
 	},
 
 	storeToLocal: async (key:any, value:any) => {
-		if (key !== undefined && value !== undefined) {
+		if (key !== undefined && value !== undefined && key!==null) {
 			await AsyncStorage.setItem(
 				key,
 				value !== undefined && typeof value === 'string'

@@ -1,3 +1,4 @@
+import AnimatedLottieView from 'lottie-react-native';
 import React, {useEffect} from 'react';
 import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
@@ -18,16 +19,36 @@ const SplashScreen = (props: any) => {
   }, []);
 
   const navigateTonextScreen = async () => {
+    console.log('navigate..')
     let isloggedIn = await LocalStorage.getFromLocal(STORAGE_KEY.IS_LOGGED_IN);
     if (isloggedIn) {
       props.navigation.replace(FILE_NAMES.APP_STACK);
-    } else props.navigation.replace(FILE_NAMES.AUTH_STACK);
+    } else
+     props.navigation.replace(FILE_NAMES.AUTH_STACK);
   };
 
   return (
     <MainView>
       <View style={{backgroundColor: '', flex: 1}}>
-        <Text>splash screen</Text>
+       <AnimatedLottieView
+        source={require('../animations/astronot.json')}
+        autoPlay={true}
+        loop={true}
+        // onAnimationFinish = {()=>{
+        //   navigateTonextScreen()
+        // }}
+        // colorFilters={[
+        //   {
+        //     keypath: 'button',
+        //     color: 'red',
+        //   },
+        //   {
+        //     keypath: 'Sending Loader',
+        //     color: 'black',
+        //   },
+        // ]}
+      /> 
+     
       </View>
     </MainView>
   );
