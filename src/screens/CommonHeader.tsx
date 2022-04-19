@@ -4,6 +4,7 @@ import {COLORS} from '../resources/theme';
 import {commonStyling} from '../resources/styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Assets} from '../resources/Assets';
+import AnimatedLottieView from 'lottie-react-native';
 
 const CommonHeader = (props: any) => {
   const leftButtonAssetType = () => {
@@ -39,7 +40,6 @@ const CommonHeader = (props: any) => {
             resizeMode="contain"></Image>
         </TouchableOpacity>
       ) : null}
-      
 
       <Text style={styles.profileHeader}>{props.title}</Text>
 

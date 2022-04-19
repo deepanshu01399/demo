@@ -174,7 +174,7 @@ const FlatlistScreen2 = (props: any) => {
         <CommonUIComponent
           type="cardComponent"
           backgroundColor="lightgrey"
-          borderColor={COLORS.red}
+          
           children={
             <View>
               <View
@@ -503,7 +503,7 @@ const FlatlistScreen2 = (props: any) => {
   return (
     <MainView>
        <CommonHeader
-        title={'Posts'}
+        title={'FlatList'}
         isBackButton={true}
         leftButtonType={'back'}
         onPressLeftButton={() => onPressLeftButton()}
@@ -536,7 +536,6 @@ const FlatlistScreen2 = (props: any) => {
                   <View
                     style={{
                       flex: 1,
-                      backgroundColor: 'red',
                       marginVertical: 10,
                       flexDirection: 'row',
                       justifyContent: 'space-between',

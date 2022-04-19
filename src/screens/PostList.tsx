@@ -21,22 +21,43 @@ import {FILE_NAMES} from '../static/Constants';
 import {RESETCOMMENT} from '../redux/actionTypes';
 import crashlytics from '@react-native-firebase/crashlytics';
 import CommonHeader from './CommonHeader';
-import {useNavigationState} from '@react-navigation/native';
+import {useFocusEffect, useNavigationContainerRef, useNavigationState} from '@react-navigation/native';
 
 const PostList = (props: any) => {
   const index = useNavigationState(state => state.index);
+
   let backClickCount = 0;
 
-  useEffect(() => {
-    if (index == 0) {
-      BackHandler.addEventListener('hardwareBackPress', backAction);
-      return () =>
-        BackHandler.removeEventListener('hardwareBackPress', backAction);
-    }
-  }, [index]);
+//   useEffect(() => {
+//     const backAction = () => {
+//         if (props.navigation.isFocused()) {
+//             Alert.alert("Hold on!", "Are you sure you want to exit the app?", [
+//                 {
+//                     text: "Cancel",
+//                     onPress: () => null,
+//                     style: "cancel"
+//                 },
+//                 { text: "YES", onPress: () => BackHandler.exitApp() }
+//             ]);
+//             return true;
+//         }
 
+//     };
+//     const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+//     return () => backHandler.remove();
+// }, [])
+
+  // useEffect(() => {
+  //   if (index == 0) {
+  //       BackHandler.addEventListener('hardwareBackPress', backAction)
+  //     return () =>
+  //       BackHandler.removeEventListener('hardwareBackPress', backAction);
+  //   }
+  // }, [index]);//inside tab navigation bhaidya chal .. 
+
+  useFocusEffect(() => {
+    
   const backAction = () => {
-
     // Alert.alert("Hold on!", "Are you sure you want to Exit App?", [
     //     {
     //         text: "Cancel",
@@ -45,7 +66,7 @@ const PostList = (props: any) => {
     //     },
     //     { text: "YES", onPress: () => BackHandler.exitApp() }
     // ]);
-
+if(props?.route?.params?.leftIconName=='hamburger'){
     setTimeout(() => {
       backClickCount = 0;
       console.log('exituseeffect------', backClickCount);
@@ -56,8 +77,16 @@ const PostList = (props: any) => {
       backClickCount = 1;
       ToastAndroid.show('press double back btn to exit ', ToastAndroid.SHORT);
     } else if (backClickCount == 1) BackHandler.exitApp();
+  }else props.navigation.pop();
     return true;
   };
+
+    BackHandler.addEventListener('hardwareBackPress', backAction)
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', backAction)
+    };
+  });
+
 
   console.log('props----------==>', props);
   let postList;
