@@ -14,6 +14,7 @@ import RootStack from './src/navigation/RootStack';
 import {store} from './src/redux/store';
 import { Platform } from 'react-native';
 import CodePush from 'react-native-code-push';
+import { MenuProvider } from 'react-native-popup-menu';
 
 let codePushOption = {
   checkFrequency: CodePush.CheckFrequency.MANUAL,
@@ -96,7 +97,9 @@ const App = () => {
 
   return (
     <Provider store={store}>
+        <MenuProvider>
       <RootStack></RootStack>
+      </MenuProvider>
     </Provider>
   );
 };

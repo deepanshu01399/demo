@@ -25,9 +25,8 @@ import {useFocusEffect, useNavigationContainerRef, useNavigationState} from '@re
 
 const PostList = (props: any) => {
   const index = useNavigationState(state => state.index);
-
   let backClickCount = 0;
-
+  
 //   useEffect(() => {
 //     const backAction = () => {
 //         if (props.navigation.isFocused()) {
@@ -66,6 +65,7 @@ const PostList = (props: any) => {
     //     },
     //     { text: "YES", onPress: () => BackHandler.exitApp() }
     // ]);
+    
 if(props?.route?.params?.leftIconName=='hamburger'){
     setTimeout(() => {
       backClickCount = 0;

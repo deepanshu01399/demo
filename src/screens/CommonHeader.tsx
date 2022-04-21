@@ -1,10 +1,20 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Alert, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {COLORS} from '../resources/theme';
 import {commonStyling} from '../resources/styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Assets} from '../resources/Assets';
 import AnimatedLottieView from 'lottie-react-native';
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+  MenuProvider,
+} from 'react-native-popup-menu';
+import {renderers} from 'react-native-popup-menu';
+import {FILE_NAMES} from '../static/Constants';
+const {SlideInMenu, Popover} = renderers;
 
 const CommonHeader = (props: any) => {
   const leftButtonAssetType = () => {
@@ -28,10 +38,11 @@ const CommonHeader = (props: any) => {
         return Assets.EditIcon;
     }
   };
-
+  const CheckedOption = (props:any) => (
+    <MenuOption value={props.value} text={(props.checked ? '\u2713 ' : '') + props.text} />
+  )
   return (
     <View style={styles.containerStyle}>
-
       {props.isBackButton ? (
         <TouchableOpacity onPress={() => props.onPressLeftButton()}>
           <Image
@@ -44,14 +55,52 @@ const CommonHeader = (props: any) => {
       <Text style={styles.profileHeader}>{props.title}</Text>
 
       {props.isRightButton ? (
-        <TouchableOpacity  onPress={() => props.onPressRightButton()}>
-          <Image
-            style={styles.rightButton}
-            source={rightButtonAssetType()}
-            resizeMode="contain"></Image>
-        </TouchableOpacity>
-      ) : null}
+        <Menu renderer={SlideInMenu}
+          onSelect={value => console.log(value)}
+          //renderer={Popover}
+        >
+          <MenuTrigger
+            children={
+              <Image
+                style={styles.rightButton}
+                source={Assets.moreIcon}
+                resizeMode="contain"></Image>
+            }
+           // customStyles={triggerStyles}
+          />
+          <MenuOptions>
+          <ScrollView style={{ maxHeight: 140 }}>
+            <MenuOption
+              style={{borderBottomWidth:1}}
+              onSelect={() =>
+                props.navigation.navigate(FILE_NAMES.COMMENTLIST_SCREEN)
+              }
+              text="Go to Comments"
+            />
+          <MenuOption 
+            style={{borderBottomWidth:1}}
+          onSelect={() => Alert.alert(`Save`)} text="Save" />
+            <MenuOption
+              style={{borderBottomWidth:1}}
+             onSelect={() => Alert.alert(`Delete`)}>
+              <Text style={{color: 'red'}}>Delete</Text>
+            </MenuOption>
 
+            <MenuOptions>
+  <CheckedOption checked value={1} text='One' />
+  <CheckedOption checked value={2} text='Two' />
+</MenuOptions>
+
+            <MenuOption
+              onSelect={() => Alert.alert(`Not called`)}
+              disabled={true}
+              text="Disabled"
+              style={{borderBottomWidth:1}}
+            />
+            </ScrollView>
+          </MenuOptions>
+        </Menu>
+      ) : null}
     </View>
   );
 };
@@ -69,8 +118,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     elevation: 2,
     shadowRadius: 2,
-    paddingHorizontal: 10,
     backgroundColor: 'cyan',
+    marginLeft: 5,
     flexDirection: 'row',
   },
   profileHeader: {
@@ -78,8 +127,8 @@ const styles = StyleSheet.create({
     fontFamily: '',
     fontSize: 18,
     fontWeight: 'bold',
-    textAlign:'center',
-    flex:1,
+    textAlign: 'center',
+    flex: 1,
   },
   leftButton: {
     width: 18,
@@ -88,6 +137,8 @@ const styles = StyleSheet.create({
   rightButton: {
     width: 25,
     height: 25,
+    justifyContent: 'center',
+    alignSelf: 'center',
   },
   pickerWrapper: {
     flex: 1,

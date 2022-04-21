@@ -14,6 +14,7 @@ import blueBackArrow from '../assets/blueBackArrow.png'
 import notification1 from '../assets/Notification1.png'
 import avatar from '../assets/avatar.png'
 import people from '../assets/people.png'
+import moreIcon from '../assets/more.png'
 
 export const Assets={
     crossbtn,
@@ -31,5 +32,5 @@ export const Assets={
     logout,
     avatar,
     people,
-
+    moreIcon
 }
