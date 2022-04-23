@@ -4,6 +4,7 @@ import LineCharts from '../screens/charts/LineCharts';
 import Comments from '../screens/Comments';
 import FlatlistScreen from '../screens/Flatlist1';
 import FlatlistScreen2 from '../screens/Flatlist2';
+import InAppPurchase from '../screens/iap/InAppPurchase';
 import PersonDetails from '../screens/PersonDetails';
 import PostList from '../screens/PostList';
 import ProfileScreen from '../screens/ProfileScreen';
@@ -25,7 +26,11 @@ const AppStack = () => {
       <Stack.Screen component={FlatlistScreen2} name={FILE_NAMES.FLAT_SCREEN2} options={{headerShown:false}}/>
       <Stack.Screen component={FlatlistScreen} name={FILE_NAMES.FLAT_SCREEN} options={{headerShown:false}}/>
       <Stack.Screen component={PostList} name={FILE_NAMES.POSTLIST_SCREEN} options={{headerShown:false}}   />
-
+      <Stack.Screen
+        component={InAppPurchase}
+        name={FILE_NAMES.IAP_SCREEN}
+        options={{headerShown: true}}
+      />
     </Stack.Navigator>
   );
 };

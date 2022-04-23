@@ -68,6 +68,11 @@ const DrawerContent = props => {
       navigateTo: FILE_NAMES.FLAT_SCREEN2,
     },
     {
+      key: 'inAppPurchase',
+      value: 'InApp Purchase',
+      navigateTo: FILE_NAMES.IAP_SCREEN,
+    },
+    {
       key: 'logout',
       value: 'Logout',
       option: [],

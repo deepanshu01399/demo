@@ -27,6 +27,7 @@
     "react-native-datepicker": "^1.7.2",
     "react-native-fbsdk": "^3.0.0",
     "react-native-gesture-handler": "^2.4.0",
+    "react-native-iap": "^8.0.8",
     "react-native-image-picker": "^4.7.3",
     "react-native-modal-selector": "^2.1.0",
     "react-native-popup-menu": "^0.15.12",

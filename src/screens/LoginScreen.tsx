@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, ScrollView, StyleSheet, View} from 'react-native';
+import {Alert, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import * as actions from '../redux/actionCreatorsTs';
 import MainView from './MainView';
@@ -16,6 +16,7 @@ const LoginScreen = (props: any) => {
 
   const submitLoginDetails = async () => {
     if (validation()) {
+      props._showProgressBar();
       LocalStorage.storeToLocal(STORAGE_KEY.USER_NAME, userName);
       AsyncStorage.setItem(STORAGE_KEY.USER_PASSWORD, password);
       await LocalStorage.storeToLocal(
@@ -23,11 +24,12 @@ const LoginScreen = (props: any) => {
         true,
       ).then(res => console.log('isfirstitmelogin---', res));
       await LocalStorage.storeToLocal(STORAGE_KEY.IS_LOGGED_IN, true);
-
+      props._hideProgress();
       props.navigation.replace(FILE_NAMES.APP_STACK);
     }
   };
   const validation = () => {
+    console.log(userName , password)
     let isValid = true;
     if (userName == '' && userName == undefined) {
       Alert.alert('UserName required');
@@ -38,14 +40,18 @@ const LoginScreen = (props: any) => {
     } else if (userName !== 'qwerty' && password !== '1234') {
       Alert.alert('Invalid creads...');
       isValid = false;
+    }else if (userName === 'qwerty' && password === '1234') {
+      isValid = true;
     }
-
+    
     return isValid;
   };
 
   return (
     <MainView>
-      <ScrollView style={{marginBottom: 20}}>
+      <ScrollView >
+        <View>
+        <Text style={{fontFamily:'',fontWeight:'bold',fontSize:20,flex:1,textAlign:'center',marginVertical:30}}> Login </Text>
         <View style={{flexDirection: 'column'}}>
           <FieldGeneratorScreen
             lable={'UserName'}
@@ -83,6 +89,9 @@ const LoginScreen = (props: any) => {
             />
           </View>
         </View>
+        <Text style={{fontFamily:'',fontWeight:'bold',fontSize:15,flex:1,textAlign:'center',marginVertical:30}}> You can use UserName:'qwerty' & Password:1234 </Text>
+
+        </View>
       </ScrollView>
     </MainView>
   );
@@ -105,6 +114,7 @@ const mapStateToProps = (state: stateProps) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     _showProgressBar: () => dispatch(actions.showProgressBar()),
+    _hideProgress: () => dispatch(actions.hideProgressBar()),
   };
 };
 

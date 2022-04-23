@@ -247,6 +247,7 @@ const mapDispatchToProps = (dispatch: any) => {
     _showProgressBar: () => dispatch(actions.showProgressBar()),
     _getPerSonDetail: (id: Number) => dispatch(actions.getPersonDetail(id)),
     _resetComment: () => dispatch({type: RESETCOMMENT}),
+
   };
 };
 const onShare = async (url: string) => {

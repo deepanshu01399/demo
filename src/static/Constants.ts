@@ -12,6 +12,7 @@ export const FILE_NAMES = {
   BOTTOM_TAB: 'Bottomtab',
   PEOPLE_STACK: 'Peoplestack',
   SPLASH_SCREEN: 'SplashScreen',
+  IAP_SCREEN: 'IAPScreen',
   POSTLIST_SCREEN: 'Posts',
   PEOPLE_SCREEN: 'People',
   PERSONDETAIL_SCREEN: 'Profile Details',

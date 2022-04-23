@@ -24,6 +24,8 @@ target 'demo' do
 
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
 
+  pod 'RNIap', :path => '../node_modules/react-native-iap'
+
   target 'demoTests' do
     inherit! :complete
     # Pods for testing

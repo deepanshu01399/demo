@@ -17,7 +17,6 @@ import MainView from './MainView';
 
 const FlatlistScreen = (props: any) => {
   const [data, setdata] = useState<flateDataListInterface[]>([]);
-  const [checked, setChecked] = useState<boolean>();
   const [currentEditUser, setCurrentEditUser] = useState<number>();
   const [lable5, setlable5] = useState('');
 
@@ -32,6 +31,7 @@ const FlatlistScreen = (props: any) => {
     isEmailVerified: boolean;
     isAgreeOnTerms: boolean;
     termConditions: termCondition[];
+    isChecked: boolean;
   }
 
   const flateDataList = [
@@ -43,7 +43,6 @@ const FlatlistScreen = (props: any) => {
       isAgreeOnTerms: false,
       termConditions: [
         {termCondition: 'this is term Condition 1 for deepanshu'},
-        {termCondition: 'this is term Condition 2 for deepanshu'},
       ],
     },
     {
@@ -74,23 +73,41 @@ const FlatlistScreen = (props: any) => {
       emailId: 'rinku@gmail.com',
       isEmailVerified: true,
       isAgreeOnTerms: false,
+      termConditions: [{termCondition: 'this is term Condition 1 for rinku'}],
+    },
+    ,
+    {
+      id: 3,
+      name: 'ankit',
+      emailId: 'ankit@gmail.com',
+      isEmailVerified: false,
+      isAgreeOnTerms: true,
       termConditions: [
-        {termCondition: 'this is term Condition 1 for rinku'},
-        {termCondition: 'this is term Condition 2 for rinku'},
+        {termCondition: 'this is term Condition 1 for ankit'},
+        {termCondition: 'this is term Condition 2 for ankit'},
       ],
+    },
+    {
+      id: 4,
+      name: 'aarav',
+      emailId: 'aarav@gmail.com',
+      isEmailVerified: true,
+      isAgreeOnTerms: false,
+      termConditions: [{termCondition: 'this is term Condition 1 for aarav'}],
     },
   ];
 
   useEffect(() => {
     let datalist: flateDataListInterface[] = [];
-    flateDataList.forEach((item, index) => {
+    flateDataList.forEach((item: any, index) => {
       let dataitem: flateDataListInterface = {
-        id: item.id,
-        name: item.name,
-        emailId: item.emailId,
-        isAgreeOnTerms: item.isAgreeOnTerms,
-        isEmailVerified: item.isEmailVerified,
-        termConditions: item.termConditions,
+        id: item?.id,
+        name: item?.name,
+        emailId: item?.emailId,
+        isAgreeOnTerms: item?.isAgreeOnTerms,
+        isEmailVerified: item?.isEmailVerified,
+        termConditions: item?.termConditions,
+        isChecked: false,
       };
       datalist.push(dataitem);
     });
@@ -99,10 +116,16 @@ const FlatlistScreen = (props: any) => {
 
   const renderFlateListItem = (item: flateDataListInterface, index: number) => {
     return (
-      <View style={{marginTop: 10}}>
+      <TouchableOpacity
+        style={{marginTop: 10}}
+        onPress={() => {
+          clickedOnItem(item, index);
+        }}>
         <CommonUIComponent
           type="cardComponent"
-          backgroundColor="lightgrey"
+          backgroundColor={
+            item.isChecked ? COLORS.appDefaultColor : 'lightgrey'
+          }
           borderColor={
             item.isAgreeOnTerms ? COLORS.appDefaultColor : COLORS.red
           }
@@ -242,13 +265,29 @@ const FlatlistScreen = (props: any) => {
             </View>
           }
         />
-      </View>
+      </TouchableOpacity>
     );
   };
 
   const submitList = () => {
-    console.log('on submit---------->');
+    let checkedItems = data.filter(item => {
+      if (item.isChecked) {
+        return item;
+      }
+    });
+
+    console.log('checked items==>', checkedItems);
+    return checkedItems;
   };
+
+  const clickedOnItem = (item: flateDataListInterface, index: number) => {
+    let item1 = data[index];
+    item1.isChecked = !item1.isChecked;
+    data[index] = item1;
+    setdata([...data]);
+    setlable5('email');
+  };
+
   const Editclicked = (data: flateDataListInterface, email: string) => {
     console.log('on edit---------->');
     if (email) {
@@ -325,7 +364,7 @@ const FlatlistScreen = (props: any) => {
 
   return (
     <MainView>
-      <ScrollView style={{marginBottom: 20, marginHorizontal: 8}}>
+      <ScrollView style={{marginHorizontal: 8}}>
         <CommonUIComponent
           type="headerText"
           label="Hello FlateList"
@@ -355,6 +394,7 @@ const FlatlistScreen = (props: any) => {
         </View>
         <FlatList
           data={data}
+          style={{marginBottom: 20}}
           renderItem={({item, index}) => renderFlateListItem(item, index)}
           keyExtractor={(item, index) => index.toString()}
         />
