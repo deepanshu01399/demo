@@ -5,16 +5,17 @@ export interface postDetail {
   limit: number;
 }
 export interface aboutPost {
-  id: Number;
+  id: number;
   image: string;
   likes: number;
+  isLiked:boolean;
   tags?: string[] | null;
   text: string;
   publishDate: string;
   owner: Owner;
 }
 export interface Owner {
-  id: Number;
+  id: number;
   title: string;
   firstName: string;
   lastName: string;

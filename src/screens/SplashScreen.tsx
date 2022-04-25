@@ -8,8 +8,6 @@ import LocalStorage from '../static/LocalStorage';
 import MainView from './MainView';
 
 const SplashScreen = (props: any) => {
-  const isLoading = props.isLoading;
-  const postList = props.postList.data ?? [];
 
   useEffect(() => {
     props._getPostList(10);
@@ -21,10 +19,12 @@ const SplashScreen = (props: any) => {
   const navigateTonextScreen = async () => {
     console.log('navigate..')
     let isloggedIn = await LocalStorage.getFromLocal(STORAGE_KEY.IS_LOGGED_IN);
-    if (isloggedIn) {
-      props.navigation.replace(FILE_NAMES.APP_STACK);
-    } else
-     props.navigation.replace(FILE_NAMES.AUTH_STACK);
+    // if (isloggedIn) {
+    //   props.navigation.replace(FILE_NAMES.APP_STACK);
+    // } else
+    //  props.navigation.replace(FILE_NAMES.AUTH_STACK);
+   props.navigation.replace(FILE_NAMES.APP_STACK);
+
   };
 
   return (

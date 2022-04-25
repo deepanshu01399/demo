@@ -1,4 +1,4 @@
-package com.demo;
+package com.dummyDemo;
 
 import com.facebook.react.ReactActivity;
 

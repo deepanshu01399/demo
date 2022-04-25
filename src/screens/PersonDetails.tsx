@@ -16,11 +16,12 @@ import MainView from './MainView';
 import * as RootNavigation from "../navigation/RootNavigation"
 import { StackActions } from '@react-navigation/native';
 import CommonHeader from './CommonHeader';
+import { Assets } from '../resources/Assets';
 
 
 const PersonDetails = (props: any) => {
   console.log('PersonDetailsProps: ==>', props);
-  const personDetails = props.personDetails ?? [];
+  const personDetails = props.personDetails ?? {};
 
   const seeUsersPost = (id: Number | undefined, no: Number) => {
     props._showProgressBar();
@@ -36,6 +37,11 @@ const PersonDetails = (props: any) => {
     props?.navigation.goBack()
   };
 
+  function isEmpty(obj:any) {
+    return Object.keys(obj).length === 0;
+}
+
+
   return (
     <MainView>
       <CommonHeader
@@ -45,15 +51,18 @@ const PersonDetails = (props: any) => {
         onPressLeftButton={() => onPressLeftButton()}
         navigation={props?.navigation}
         isRightButton={false}
-       
       />
-      {personDetails != null || personDetails != undefined ? (
+
+      {console.log("/////////////////",personDetails)}
+      { !isEmpty(personDetails)? (
         <>
           <ScrollView showsVerticalScrollIndicator={false}>
             <Image
               style={styles.imageViewStyle}
-              source={{ uri: personDetails.picture }}
+              
+              source={personDetails.picture?{ uri: personDetails.picture }:Assets.avatar}
             />
+          
             <TouchableOpacity onPress={() => seeUsersPost(personDetails.id, 10)}>
               <Text
                 style={{
@@ -121,7 +130,31 @@ const PersonDetails = (props: any) => {
             </View>
           </ScrollView>
         </>
-      ) : null}
+      ) : 
+      <>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Image
+          style={styles.imageViewStyle}
+          
+          source={personDetails.picture?{ uri: personDetails.picture }:Assets.avatar}
+        />
+      
+       <View style={{flexDirection:'row',flex:1,alignItems:'center',justifyContent:'center'}}>
+        <View style={styles.outershadowBoxView}/>
+        <View style={styles.outershadowBoxView}/>
+        </View>
+        <View style={styles.outershadowBoxView}/>
+        <View style={styles.outershadowBoxView}/>
+        <View style={styles.outershadowBoxView}/>
+        <View style={styles.outershadowBoxView}/>
+        <View style={styles.outershadowBoxView}/>
+        <View style={styles.outershadowBoxView}/>
+        <Text style={{fontFamily:'',fontWeight:'bold',fontSize:15,marginHorizontal:10,flex:1,textAlign:'center',marginVertical:30}}>
+           If you want to see the previous user details then u please need to first tap on any user profile manually </Text>
+       
+      </ScrollView>
+    </>
+      }
     </MainView>
   );
 };
@@ -185,5 +218,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 10,
     borderColor: 'cyan',
+  },
+  outershadowBoxView: {
+    flexDirection: 'row',
+    borderRadius: 8,
+    justifyContent: 'space-between',
+    padding: 20,
+    marginTop:10,
+    backgroundColor:'lightgrey',
+    marginHorizontal:20
   },
 });

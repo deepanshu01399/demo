@@ -15,17 +15,48 @@ const AppStack = () => {
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator
-   // screenOptions={{headerShown:false}}
+    // screenOptions={{headerShown:false}}
     >
-      
-      <Stack.Screen component={DrawerNavigationStack} name={FILE_NAMES.DRAWER_TAB}  options={{headerShown:false}} />
-      <Stack.Screen component={PersonDetails} name={FILE_NAMES.PERSONDETAIL_SCREEN} options={{headerShown:false}} />
-      <Stack.Screen component={Comments} name={FILE_NAMES.COMMENTLIST_SCREEN} options={{headerShown:false}}/>
-      <Stack.Screen component={LineCharts} name={FILE_NAMES.LINECHART_SCREEN}options={{headerShown:false}} />
-      <Stack.Screen component={ProfileScreen} name={FILE_NAMES.PROFILE_SCREEN}options={{headerShown:false}} />
-      <Stack.Screen component={FlatlistScreen2} name={FILE_NAMES.FLAT_SCREEN2} options={{headerShown:false}}/>
-      <Stack.Screen component={FlatlistScreen} name={FILE_NAMES.FLAT_SCREEN} options={{headerShown:false}}/>
-      <Stack.Screen component={PostList} name={FILE_NAMES.POSTLIST_SCREEN} options={{headerShown:false}}   />
+      <Stack.Screen
+        component={DrawerNavigationStack}
+        name={FILE_NAMES.DRAWER_TAB}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={PersonDetails}
+        name={FILE_NAMES.PERSONDETAIL_SCREEN}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={Comments}
+        name={FILE_NAMES.COMMENTLIST_SCREEN}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={LineCharts}
+        name={FILE_NAMES.LINECHART_SCREEN}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={ProfileScreen}
+        name={FILE_NAMES.PROFILE_SCREEN}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={FlatlistScreen2}
+        name={FILE_NAMES.FLAT_SCREEN2}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={FlatlistScreen}
+        name={FILE_NAMES.FLAT_SCREEN}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={PostList}
+        name={FILE_NAMES.POSTLIST_SCREEN}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         component={InAppPurchase}
         name={FILE_NAMES.IAP_SCREEN}

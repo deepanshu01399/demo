@@ -53,14 +53,14 @@ const DrawerContent = props => {
       option: [],
       navigateTo: FILE_NAMES.BOTTOM_TAB,
     },
-    { key: 'login', value: 'Login', navigateTo: FILE_NAMES.LOGIN_SCREEN },
+    // { key: 'login', value: 'Login', navigateTo: FILE_NAMES.LOGIN_SCREEN },
     {
       key: 'profile',
       value: 'Profile',
       option: [],
       navigateTo: FILE_NAMES.PERSONDETAIL_SCREEN,
     },
-    { key: 'settings', value: 'Settings', option: settingOptions },
+    // { key: 'settings', value: 'Settings', option: settingOptions },
     { key: 'flatlist1', value: 'Flat List1', navigateTo: FILE_NAMES.FLAT_SCREEN },
     {
       key: 'flatlist2',
@@ -72,12 +72,12 @@ const DrawerContent = props => {
       value: 'InApp Purchase',
       navigateTo: FILE_NAMES.IAP_SCREEN,
     },
-    {
-      key: 'logout',
-      value: 'Logout',
-      option: [],
-      navigateTo: FILE_NAMES.LOGIN_SCREEN,
-    },
+    // {
+    //   key: 'logout',
+    //   value: 'Logout',
+    //   option: [],
+    //   navigateTo: FILE_NAMES.LOGIN_SCREEN,
+    // },
   ];
 
   useEffect(() => {
@@ -208,14 +208,17 @@ const DrawerContent = props => {
               //  : Assets.avatar
             }
             style={{ alignSelf: 'center', height: 80, width: 80, marginBottom: 10 }}></Image>
-          <Text style={{}}>{userName + ' ' + 'lastName'}</Text>
+          <Text style={{}}>
+            {/* {userName + ' ' + 'lastName'} */}
+            Hey User 
+            </Text>
           <Text
             style={{
               color: COLORS.white,
               fontSize: 15,
               alignSelf: 'center',
             }}>
-            {'deepanshu@gmail.com'}
+            {'xyz@gmail.com'}
           </Text>
         </View>
       </TouchableOpacity>

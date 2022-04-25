@@ -285,7 +285,6 @@ const FlatlistScreen = (props: any) => {
     item1.isChecked = !item1.isChecked;
     data[index] = item1;
     setdata([...data]);
-    setlable5('email');
   };
 
   const Editclicked = (data: flateDataListInterface, email: string) => {

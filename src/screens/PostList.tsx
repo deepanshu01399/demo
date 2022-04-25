@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Alert,
   BackHandler,
@@ -21,30 +21,30 @@ import {FILE_NAMES} from '../static/Constants';
 import {RESETCOMMENT} from '../redux/actionTypes';
 import crashlytics from '@react-native-firebase/crashlytics';
 import CommonHeader from './CommonHeader';
-import {useFocusEffect, useNavigationContainerRef, useNavigationState} from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 
 const PostList = (props: any) => {
-  const index = useNavigationState(state => state.index);
   let backClickCount = 0;
-  
-//   useEffect(() => {
-//     const backAction = () => {
-//         if (props.navigation.isFocused()) {
-//             Alert.alert("Hold on!", "Are you sure you want to exit the app?", [
-//                 {
-//                     text: "Cancel",
-//                     onPress: () => null,
-//                     style: "cancel"
-//                 },
-//                 { text: "YES", onPress: () => BackHandler.exitApp() }
-//             ]);
-//             return true;
-//         }
+  const [postListData, setpostlistData] = useState<any>([]);
 
-//     };
-//     const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
-//     return () => backHandler.remove();
-// }, [])
+  //   useEffect(() => {
+  //     const backAction = () => {
+  //         if (props.navigation.isFocused()) {
+  //             Alert.alert("Hold on!", "Are you sure you want to exit the app?", [
+  //                 {
+  //                     text: "Cancel",
+  //                     onPress: () => null,
+  //                     style: "cancel"
+  //                 },
+  //                 { text: "YES", onPress: () => BackHandler.exitApp() }
+  //             ]);
+  //             return true;
+  //         }
+
+  //     };
+  //     const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+  //     return () => backHandler.remove();
+  // }, [])
 
   // useEffect(() => {
   //   if (index == 0) {
@@ -52,48 +52,52 @@ const PostList = (props: any) => {
   //     return () =>
   //       BackHandler.removeEventListener('hardwareBackPress', backAction);
   //   }
-  // }, [index]);//inside tab navigation bhaidya chal .. 
+  // }, [index]);//inside tab navigation bhaidya chal ..
 
   useFocusEffect(() => {
-    
-  const backAction = () => {
-    // Alert.alert("Hold on!", "Are you sure you want to Exit App?", [
-    //     {
-    //         text: "Cancel",
-    //         onPress: () => null,
-    //         style: "cancel"
-    //     },
-    //     { text: "YES", onPress: () => BackHandler.exitApp() }
-    // ]);
-    
-if(props?.route?.params?.leftIconName=='hamburger'){
-    setTimeout(() => {
-      backClickCount = 0;
-      console.log('exituseeffect------', backClickCount);
-    }, 2000); // 2 seconds to tap second-time
-    console.log('exitapp------', backClickCount);
+    setpostlistData(
+      props.route.params?.callFor !== 'UserPost'
+        ? props.postList.data
+        : props.userPostList?.data,
+    );
+    console.log('userpost----------',props.route.params?.callFor !== 'UserPost'
+    ? props.postList.data
+    : props.userPostList?.data)
 
-    if (backClickCount == 0) {
-      backClickCount = 1;
-      ToastAndroid.show('press double back btn to exit ', ToastAndroid.SHORT);
-    } else if (backClickCount == 1) BackHandler.exitApp();
-  }else props.navigation.pop();
-    return true;
-  };
+    const backAction = () => {
+      // Alert.alert("Hold on!", "Are you sure you want to Exit App?", [
+      //     {
+      //         text: "Cancel",
+      //         onPress: () => null,
+      //         style: "cancel"
+      //     },
+      //     { text: "YES", onPress: () => BackHandler.exitApp() }
+      // ]);
 
-    BackHandler.addEventListener('hardwareBackPress', backAction)
-    return () => {
-      BackHandler.removeEventListener('hardwareBackPress', backAction)
+      if (props?.route?.params?.leftIconName == 'hamburger') {
+        setTimeout(() => {
+          backClickCount = 0;
+          console.log('exituseeffect------', backClickCount);
+        }, 2000); // 2 seconds to tap second-time
+        console.log('exitapp------', backClickCount);
+
+        if (backClickCount == 0) {
+          backClickCount = 1;
+          ToastAndroid.show(
+            'press double back btn to exit ',
+            ToastAndroid.SHORT,
+          );
+        } else if (backClickCount == 1) BackHandler.exitApp();
+      } else props.navigation.pop();
+      return true;
     };
+
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+    };
+    
   });
-
-
-  console.log('props----------==>', props);
-  let postList;
-  let userPosts;
-  if (props.route.params?.callFor !== 'UserPost')
-    postList = props.postList.data ?? [];
-  else userPosts = props.userPostList?.data ?? [];
 
   let postLimit = 10;
 
@@ -114,10 +118,18 @@ if(props?.route?.params?.leftIconName=='hamburger'){
     });
   };
 
+  const clickedOnlikeBtn = (id: number, index: number, isliked: boolean) => {
+    let item = postListData[index];
+    postListData[index] = {...item, isLiked: !isliked,likes:!isliked?item.likes+1:item.likes-1};
+
+    //setpostlistData(postListData);
+    setpostlistData([...postListData]);
+  };
+
   const renderItems = (item: aboutPost, index: number) => {
     return (
       <View style={styles.constainerStyle}>
-        <TouchableOpacity onPress={() => getPersonDetail(item.owner.id)}>
+        <TouchableOpacity  onPress={() => getPersonDetail(item.owner.id)}>
           <View style={styles.profileHeader}>
             <Image
               style={styles.profileHeaderImage}
@@ -128,11 +140,15 @@ if(props?.route?.params?.leftIconName=='hamburger'){
             </Text>
           </View>
         </TouchableOpacity>
-        <Text style={styles.profileTagtext}>#{item.tags?.join(' #')} V13</Text>
+        <Text style={styles.profileTagtext}>#{item.tags?.join(' #')}</Text>
+        <Text style={[styles.profileTagtext,{fontSize:12}]}>{item.text}</Text>
+
         <TouchableOpacity
           onPress={() => {
             showComments(item.id, item.image);
-          }}>
+          }}
+          activeOpacity={.6}
+          >
           <Image
             style={{
               width: '100%',
@@ -143,39 +159,53 @@ if(props?.route?.params?.leftIconName=='hamburger'){
         </TouchableOpacity>
         <Text style={styles.postLikeText}>{item.likes} Likes </Text>
 
-        <View style={styles.commentView}>
+        <View style={styles.likeCommentShareView}>
           <TouchableOpacity
+          style={{flex:1}}
             onPress={() => {
               //	crashlytics().crash();
+              clickedOnlikeBtn(item.id, index, item.isLiked);
             }}>
-            <View style={styles.commentItem}>
-              <Icon
-                name="thumbs-up"
-                //onPress={this.loginWithFacebook}
-                size={25}></Icon>
-              <Text style={styles.profileTagtext}>Likes </Text>
-            </View>
+            {item.isLiked ||item.isLiked==undefined ? (
+              <View style={styles.commentItem}>
+                <Icon
+                  name="thumbs-up"                  
+                  color={item.isLiked==undefined ?'grey':'cyan'}
+                  size={25}></Icon>
+                <Text style={styles.profileTagtext}>{item.isLiked==undefined?"like":"Unlike"} </Text>
+              </View>
+            ) : (
+              <View style={styles.commentItem}>
+                <Icon
+                  name="thumbs-down"
+                  color={'red'}
+                  size={25}></Icon>
+                <Text style={styles.profileTagtext}>Like </Text>
+              </View>
+            )}
           </TouchableOpacity>
           <TouchableOpacity
+            style={{flex:1}}
             onPress={() => {
-              crashlytics().log('taps on comments...');
+              //crashlytics().log('taps on comments...');
               showComments(item.id, item.image);
             }}>
             <View style={styles.commentItem}>
               <Icon
                 name="comment"
-                //onPress={this.loginWithFacebook}
                 size={25}></Icon>
               <Text style={styles.profileTagtext}>Comment</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
+            style={{flex:1}}
             onPress={() => {
               onShare(item.image);
             }}>
             <View style={styles.commentItem}>
-              {/* color="black" */}
-              <Icon name="share" size={30} light />
+              <Icon name="share" 
+              //color={'cyan'}
+               size={30} light />
               <Text style={styles.profileTagtext}>Share </Text>
             </View>
           </TouchableOpacity>
@@ -214,7 +244,7 @@ if(props?.route?.params?.leftIconName=='hamburger'){
       <FlatList
         keyExtractor={(item, index: any) => index}
         renderItem={({item, index}) => renderItems(item, index)}
-        data={props.route.params?.callFor !== 'UserPost' ? postList : userPosts}
+        data={postListData}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
           <Text style={styles.profileHeadertext}>Loading from ...</Text>
@@ -247,7 +277,6 @@ const mapDispatchToProps = (dispatch: any) => {
     _showProgressBar: () => dispatch(actions.showProgressBar()),
     _getPerSonDetail: (id: Number) => dispatch(actions.getPersonDetail(id)),
     _resetComment: () => dispatch({type: RESETCOMMENT}),
-
   };
 };
 const onShare = async (url: string) => {
@@ -290,15 +319,12 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   commentItem: {
-    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     marginVertical: 4,
-    //backgroundColor: 'red',
     marginHorizontal: 10,
   },
-  commentView: {
+  likeCommentShareView: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -315,11 +341,11 @@ const styles = StyleSheet.create({
   },
   profileTagtext: {
     //backgroundColor: 'white',
-    fontSize: 13,
+    fontSize: 14,
     marginLeft: 5,
     fontWeight: 'bold',
-    //fontFamily: 'Poppins-Medium',
-    fontFamily: 'Raaoboto',
+    fontFamily: 'Poppins-Medium',
+    //fontFamily: 'Raaoboto',
   },
   postLikeText: {
     //backgroundColor: 'white',
