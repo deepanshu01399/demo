@@ -1,8 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Platform, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  Alert,
+  Button,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {connect} from 'react-redux';
 import MainView from '../MainView';
-import iap from 'react-native-iap';
+import iap, { Purchase, PurchaseError } from 'react-native-iap';
 
 const items = Platform.select({
   ios: [],
@@ -10,8 +18,10 @@ const items = Platform.select({
 });
 
 const InAppPurchase = (props: any) => {
-  const [purchase, setPurchase] = useState(false);
-  const [products, setproducts] = useState([]);
+  const [purchased, setPurchased] = useState(false);
+  const [products, setproducts] = useState<any>([]);
+  let purchaseUpdateSubscription:any;
+  let purchaseErrorSubScription:any;
 
   useEffect(() => {
     //it take a callback fun and a dependency array as an argument inside useeffect fun
@@ -27,28 +37,60 @@ const InAppPurchase = (props: any) => {
             console.log('error in finding items');
           })
           .then(res => {
-            console.log('sub res:', res);
+            console.log('sub res', res);
             setproducts(res);
           });
       });
+      purchaseUpdateSubscription =iap.purchaseUpdatedListener((purchase)=>setPurchased(true))
+      purchaseErrorSubScription= iap.purchaseErrorListener((error)=>{
+        if(!(error.responseCode)){
+          Alert.alert('Error!','there is an error with your purchase,error code'+error.responseCode);
+        }
+      })
+      return()=>{
+        try{
+          purchaseUpdateSubscription.remove()
+        }catch(error:any){
+          console.log("error while removing purchaseUpdateSubscription")
+        }
+        try{
+          purchaseErrorSubScription.remove()
+        }catch(error:any){
+          console.log("error while removing purchaseErrorSubScription")
+        }
+        try{
+          iap.endConnection();
+        }catch(error:any){
+          console.log("error while ending purhcase connection")
+        }
+        
+      }
   }, []);
 
   return (
     <MainView>
       <View style={{flex: 1}}>
-        {products.length > 0 ? 
-        <View>
-          {products.map((item)=>{
-          
-            <Button key={item['productId']} title={item['title']} onPress={() => { iap.requestSubscription(item['productId']); } }></Button>
-          })}
-          </View>
-          :
-           <Text> in App purchase</Text>
-           }
+        {products.length > 0 ? (
+          <View>
+                      <Text> In App Purchase for v16</Text>
 
+            {products.map((item: any) => 
+              <>
+                 <Button
+                  key={item?.productId}
+                  title={'title '+item?.productId}
+                  onPress={() => {
+                    iap.requestSubscription(item?.productId);
+                  }}></Button>
+               
+              </>
+            )}
+             
+          </View>
+        ) : (
+          <Text> In App Purchase</Text>
+        )}
       </View>
-        
     </MainView>
   );
 };
